@@ -1,49 +1,189 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background-dark: #0a0303;
+  --background-light: #170a0a;
+  --surface: #1d1010;
+  --surface-glass: rgba(29, 16, 16, 0.7);
+  --foreground: #ffffff;
+  --foreground-muted: #b2a0a0;
+  --accent-red: #ff3344; 
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-red: rgba(255, 51, 68, 0.4);
+  
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
 html {
   height: 100%;
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+  background: var(--background-dark);
+  background-image: radial-gradient(circle at top, var(--background-light) 0%, var(--background-dark) 80%);
+  background-attachment: fixed;
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+ul {
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  line-height: 1.1;
+}
+
+.text-accent {
+  color: var(--accent-cyan);
+}
+
+.text-muted {
+  color: var(--foreground-muted);
+}
+
+/* Glass & UI */
+.glass-panel {
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+}
+
+/* Buttons */
+.btn-glass {
+  background: rgba(255, 51, 68, 0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border-red);
+  color: var(--foreground);
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 51, 68, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 51, 68, 0.2);
+}
+
+.btn-solid {
+  background: var(--accent-red);
+  color: #000;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-solid:hover {
+  background: #ff6673;
+  transform: translateY(-2px);
+}
+
+/* Layout Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.grid-responsive-intro {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.grid-responsive-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .grid-2, .grid-responsive-intro, .grid-responsive-3 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .fixtures-table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-logo {
+    left: 1.5rem !important;
+  }
+  .nav-logo span {
+    font-size: 2rem !important;
+  }
+}
+
+.sponsor-link:hover {
+  opacity: 1 !important;
+  transform: scale(1.08);
+}
+
+.hero-section {
+  padding: 10rem 2rem 8rem;
+  transition: padding 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    padding: 16rem 1.5rem 12rem;
   }
 }
