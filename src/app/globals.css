@@ -187,3 +187,50 @@ h1, h2, h3, h4 {
     padding: 16rem 1.5rem 12rem;
   }
 }
+
+/* Mobile Side Drawer Menu */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100vh;
+  background: rgba(10, 3, 3, 0.98);
+  border-left: 1px solid rgba(255, 51, 68, 0.2);
+  padding: 6rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.mobile-drawer.open {
+  right: 0;
+}
+
+.drawer-link:hover {
+  color: var(--accent-red) !important;
+}
+
+/* Drawer Backdrop Blur */
+.mobile-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}

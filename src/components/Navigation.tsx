@@ -20,6 +20,7 @@ export default function Navigation() {
         paddingBottom: '2rem',
         position: 'relative'
       }}>
+        {/* Logo container */}
         <div className="nav-logo" style={{ 
           display: 'flex', 
           alignItems: 'center',
@@ -37,6 +38,7 @@ export default function Navigation() {
           />
         </div>
 
+        {/* Desktop Menu */}
         <ul className="glass-panel desktop-menu" style={{
           display: 'flex',
           gap: '2.5rem',
@@ -66,7 +68,7 @@ export default function Navigation() {
         {/* Hamburger Icon */}
         <button
           className="mobile-menu-btn"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(true)}
           style={{
             background: 'none',
             border: 'none',
@@ -78,41 +80,55 @@ export default function Navigation() {
         >
           ☰
         </button>
+      </div>
 
-        {/* Mobile Menu Dropdown */}
-        {isOpen && (
-          <ul className="glass-panel mobile-menu" style={{
+      {/* Mobile Drawer Overlay Backdrop */}
+      <div 
+        className={`mobile-drawer-backdrop ${isOpen ? 'open' : ''}`} 
+        onClick={() => setIsOpen(false)}
+      />
+
+      {/* Side Slide-out Drawer */}
+      <div className={`mobile-drawer ${isOpen ? 'open' : ''}`}>
+        {/* Close Button inside drawer */}
+        <button 
+          onClick={() => setIsOpen(false)} 
+          style={{
             position: 'absolute',
-            top: '6rem',
-            right: '2rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem',
-            padding: '1.5rem 2.5rem',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.1)',
-            background: 'rgba(10,3,3,0.95)',
-            zIndex: 100
-          }}>
-            {['About', 'Honours', 'Fixtures', 'FOS', 'Tours', 'Gallery', 'Contact'].map((item) => (
-              <li key={item}>
-                <Link
-                  href="#"
-                  onClick={() => setIsOpen(false)}
-                  style={{
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    letterSpacing: '1px',
-                    color: 'var(--foreground)',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+            top: '2rem',
+            right: '2.5rem',
+            background: 'none',
+            border: 'none',
+            color: 'var(--accent-red)',
+            fontSize: '2.2rem',
+            cursor: 'pointer'
+          }}
+        >
+          ✕
+        </button>
+
+        {/* Drawer Navigation Links */}
+        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', listStyle: 'none', padding: 0, margin: 0 }}>
+          {['About', 'Honours', 'Fixtures', 'FOS', 'Tours', 'Gallery', 'Contact'].map((item) => (
+            <li key={item}>
+              <Link
+                href="#"
+                onClick={() => setIsOpen(false)}
+                className="drawer-link"
+                style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 700,
+                  letterSpacing: '1px',
+                  color: 'var(--foreground)',
+                  textTransform: 'uppercase',
+                  transition: 'color 0.2s ease'
+                }}
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
   );
