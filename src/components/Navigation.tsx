@@ -4,36 +4,36 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navItems = [
-  { 
-    label: 'About the Club', 
-    href: '/about', 
+  {
+    label: 'About the Club',
+    href: '/about',
     children: [
       { label: 'History', href: '/about/history' },
       { label: 'Officers of the Club', href: '/about/officers' }
     ]
   },
-  { 
-    label: 'Honours Board', 
+  {
+    label: 'Honours Board',
     href: '/honours',
     children: [
-      { label: 'Tim Edwards Trophy', href: '/honours/tim-edwards-trophy' },
       { label: 'Captains', href: '/honours/captains' },
-      { label: 'Order of the Golden Pedro', href: '/honours/order-of-the-golden-pedro' }
+      { label: 'Tim Edwards Trophy', href: '/honours/tim-edwards-trophy' },
+      { label: 'Golden Pedro', href: '/honours/order-of-the-golden-pedro' }
     ]
   },
-  { 
-    label: 'Fixtures & Results', 
+  {
+    label: 'Fixtures & Results',
     href: '/fixtures',
     children: [
-      { label: '2026 / 2027 Season', href: '/fixtures/2026-2027-season' }
+      { label: '2026 / 2027', href: '/fixtures/2026-2027' }
     ]
   },
-  { 
-    label: 'Festival of Sport', 
+  {
+    label: 'Festival of Sport',
     href: '/fos',
     children: [
       { label: 'Partners', href: '/fos/partners' },
-      { label: 'Previous Winners', href: '/fos/previous-winners' },
+      { label: 'Winners', href: '/fos/previous-winners' },
       { label: 'Roundup', href: '/fos/roundup' },
       { label: 'Get Involved', href: '/fos/get-involved' },
       { label: 'Gallery', href: '/fos/gallery' }
@@ -70,8 +70,8 @@ export default function Navigation() {
         position: 'relative'
       }}>
         {/* Logo container */}
-        <div className="nav-logo" style={{ 
-          display: 'flex', 
+        <div className="nav-logo" style={{
+          display: 'flex',
           alignItems: 'center',
           background: '#ffffff',
           padding: '1rem 1.5rem',
@@ -101,9 +101,9 @@ export default function Navigation() {
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.children && item.children.some(child => pathname === child.href));
             return (
-              <li 
+              <li
                 key={item.label}
-                style={{ 
+                style={{
                   position: 'relative',
                   display: 'flex',
                   alignItems: 'center',
@@ -127,7 +127,7 @@ export default function Navigation() {
                   {item.label}
                 </Link>
                 {item.children && (
-                  <button 
+                  <button
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -148,7 +148,7 @@ export default function Navigation() {
                     ▼
                   </button>
                 )}
-                
+
                 {/* Desktop Dropdown */}
                 {item.children && hoveredItem === item.label && (
                   <div style={{
@@ -171,9 +171,9 @@ export default function Navigation() {
                         const isChildActive = pathname === child.href;
                         return (
                           <li key={child.label}>
-                            <Link href={child.href} className="drawer-link" style={{ 
-                              fontSize: '0.8rem', 
-                              fontWeight: 600, 
+                            <Link href={child.href} className="drawer-link" style={{
+                              fontSize: '0.8rem',
+                              fontWeight: 600,
                               color: isChildActive ? 'var(--accent-red)' : 'var(--foreground-muted)',
                               textTransform: 'uppercase',
                               transition: 'color 0.2s ease'
@@ -209,16 +209,16 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Drawer Overlay Backdrop */}
-      <div 
-        className={`mobile-drawer-backdrop ${isOpen ? 'open' : ''}`} 
+      <div
+        className={`mobile-drawer-backdrop ${isOpen ? 'open' : ''}`}
         onClick={() => setIsOpen(false)}
       />
 
       {/* Side Slide-out Drawer */}
       <div className={`mobile-drawer ${isOpen ? 'open' : ''}`} style={{ overflowY: 'auto' }}>
         {/* Close Button inside drawer */}
-        <button 
-          onClick={() => setIsOpen(false)} 
+        <button
+          onClick={() => setIsOpen(false)}
           style={{
             position: 'absolute',
             top: '2rem',
@@ -256,7 +256,7 @@ export default function Navigation() {
                     {item.label}
                   </Link>
                   {item.children && (
-                    <button 
+                    <button
                       onClick={() => toggleExpand(item.label)}
                       style={{ background: 'none', border: 'none', color: 'var(--foreground)', fontSize: '1.5rem', cursor: 'pointer' }}
                     >
@@ -264,7 +264,7 @@ export default function Navigation() {
                     </button>
                   )}
                 </div>
-                
+
                 {/* Mobile Children Accordion */}
                 {item.children && expandedItem === item.label && (
                   <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', marginTop: '1.5rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>

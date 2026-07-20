@@ -2,8 +2,8 @@ import TableLayout from '@/components/TableLayout';
 
 export default function PreviousWinnersPage() {
   return (
-    <TableLayout 
-      title="PREVIOUS FESTIVAL WINNERS" 
+    <TableLayout
+      title="WINNERS"
       section="Festival of Sport"
       headers={["Year", "Cup Winner", "Shield Winner"]}
       rows={Array.from({ length: 8 }).map((_, i) => ({

@@ -4,6 +4,7 @@ interface TableRow {
   col1: string;
   col2: string;
   col3: string;
+  isDivider?: boolean;
 }
 
 interface TableLayoutProps {
@@ -58,16 +59,37 @@ export default function TableLayout({
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, i) => (
-                <tr key={i} style={{
-                  background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent',
-                  borderBottom: i < rows.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'
-                }}>
-                  <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent-red)' }}>{row.col1}</td>
-                  <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col2}</td>
-                  <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', color: 'var(--foreground-muted)' }}>{row.col3}</td>
-                </tr>
-              ))}
+              {rows.map((row, i) => {
+                if (row.isDivider) {
+                  return (
+                    <tr key={i} style={{ background: 'rgba(255, 51, 68, 0.08)' }}>
+                      <td colSpan={headers.length} style={{
+                        padding: '0.75rem 2rem',
+                        fontSize: '0.85rem',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        color: 'var(--accent-red)',
+                        letterSpacing: '1.5px',
+                        textAlign: 'center',
+                        borderTop: '1px solid rgba(255, 51, 68, 0.3)',
+                        borderBottom: '1px solid rgba(255, 51, 68, 0.3)'
+                      }}>
+                        {row.col1}
+                      </td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={i} style={{
+                    background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent',
+                    borderBottom: i < rows.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'
+                  }}>
+                    <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent-red)' }}>{row.col1}</td>
+                    <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col2}</td>
+                    <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', color: 'var(--foreground-muted)' }}>{row.col3}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
