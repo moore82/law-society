@@ -5,16 +5,40 @@ import { useState } from 'react';
 
 const navItems = [
   { 
-    label: 'About', 
+    label: 'About the Club', 
     href: '/about', 
     children: [
       { label: 'History', href: '/about/history' },
-      { label: 'Committee', href: '/about/committee' }
+      { label: 'Officers of the Club', href: '/about/officers' }
     ]
   },
-  { label: 'Honours', href: '/honours' },
-  { label: 'Fixtures', href: '/fixtures' },
-  { label: 'FOS', href: '/fos' },
+  { 
+    label: 'Honours Board', 
+    href: '/honours',
+    children: [
+      { label: 'Tim Edwards Trophy', href: '/honours/tim-edwards-trophy' },
+      { label: 'Captains', href: '/honours/captains' },
+      { label: 'Order of the Golden Pedro', href: '/honours/order-of-the-golden-pedro' }
+    ]
+  },
+  { 
+    label: 'Fixtures & Results', 
+    href: '/fixtures',
+    children: [
+      { label: '2026 / 2027 Season', href: '/fixtures/2026-2027-season' }
+    ]
+  },
+  { 
+    label: 'Festival of Sport', 
+    href: '/fos',
+    children: [
+      { label: 'Partners', href: '/fos/partners' },
+      { label: 'Previous Winners', href: '/fos/previous-winners' },
+      { label: 'Roundup', href: '/fos/roundup' },
+      { label: 'Get Involved', href: '/fos/get-involved' },
+      { label: 'Gallery', href: '/fos/gallery' }
+    ]
+  },
   { label: 'Tours', href: '/tours' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' }
