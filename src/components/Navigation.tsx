@@ -103,7 +103,7 @@ export default function Navigation() {
           display: 'flex',
           gap: '2.5rem',
           padding: '0.75rem 3rem',
-          borderRadius: '50px',
+          borderRadius: '8px',
           alignItems: 'center',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
