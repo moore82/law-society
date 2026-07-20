@@ -24,11 +24,6 @@ export default function StandardContentLayout({ title, section }: StandardConten
           }
         }
         @media (max-width: 768px) {
-          .content-intro-text,
-          .content-body-text,
-          .content-body-text p {
-            text-align: center !important;
-          }
           .content-img-wrapper {
             max-width: 400px !important;
             margin: 0 auto !important;
