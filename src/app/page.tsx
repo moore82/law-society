@@ -24,7 +24,7 @@ export default function Home() {
           marginBottom: '1rem',
           textShadow: '0 4px 20px rgba(0,0,0,0.8)'
         }}>
-          LAW SOCIETY RFC<br />
+          LAW SOCIETY<br />
           <span style={{ color: '#fff' }}>RUGBY CLUB</span>
         </h1>
         <p style={{

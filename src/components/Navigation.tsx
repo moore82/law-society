@@ -2,8 +2,31 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+const navItems = [
+  { 
+    label: 'About', 
+    href: '/about', 
+    children: [
+      { label: 'History', href: '/about/history' },
+      { label: 'Committee', href: '/about/committee' }
+    ]
+  },
+  { label: 'Honours', href: '/honours' },
+  { label: 'Fixtures', href: '/fixtures' },
+  { label: 'FOS', href: '/fos' },
+  { label: 'Tours', href: '/tours' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Contact', href: '/contact' }
+];
+
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+
+  const toggleExpand = (label: string) => {
+    setExpandedItem(expandedItem === label ? null : label);
+  };
 
   return (
     <nav style={{
@@ -31,11 +54,13 @@ export default function Navigation() {
           borderBottomRightRadius: '12px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
         }}>
-          <img
-            src="/img/logo_red.png"
-            alt="Law Society RFC Logo"
-            style={{ height: '70px', objectFit: 'contain' }}
-          />
+          <Link href="/">
+            <img
+              src="/img/logo_red.png"
+              alt="Law Society RFC Logo"
+              style={{ height: '70px', objectFit: 'contain' }}
+            />
+          </Link>
         </div>
 
         {/* Desktop Menu */}
@@ -47,20 +72,64 @@ export default function Navigation() {
           alignItems: 'center',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          {['About', 'Honours', 'Fixtures', 'FOS', 'Tours', 'Gallery', 'Contact'].map((item) => (
-            <li key={item}>
+          {navItems.map((item) => (
+            <li 
+              key={item.label}
+              style={{ position: 'relative' }}
+              onMouseEnter={() => setHoveredItem(item.label)}
+              onMouseLeave={() => setHoveredItem(null)}
+            >
               <Link
-                href="#"
+                href={item.href}
                 style={{
                   fontSize: '0.8rem',
                   fontWeight: 600,
                   letterSpacing: '1px',
                   color: 'var(--foreground)',
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem'
                 }}
               >
-                {item}
+                {item.label}
+                {item.children && <span style={{ fontSize: '0.6rem' }}>▼</span>}
               </Link>
+              
+              {/* Desktop Dropdown */}
+              {item.children && hoveredItem === item.label && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  paddingTop: '1.5rem', /* invisible hover bridge */
+                  width: '180px'
+                }}>
+                  <ul className="glass-panel" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '1rem',
+                    gap: '1.25rem',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: 'rgba(10,3,3,0.95)'
+                  }}>
+                    {item.children.map(child => (
+                      <li key={child.label}>
+                        <Link href={child.href} className="drawer-link" style={{ 
+                          fontSize: '0.8rem', 
+                          fontWeight: 600, 
+                          color: 'var(--foreground-muted)',
+                          textTransform: 'uppercase',
+                          transition: 'color 0.2s ease'
+                        }}>
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ul>
@@ -89,7 +158,7 @@ export default function Navigation() {
       />
 
       {/* Side Slide-out Drawer */}
-      <div className={`mobile-drawer ${isOpen ? 'open' : ''}`}>
+      <div className={`mobile-drawer ${isOpen ? 'open' : ''}`} style={{ overflowY: 'auto' }}>
         {/* Close Button inside drawer */}
         <button 
           onClick={() => setIsOpen(false)} 
@@ -108,24 +177,59 @@ export default function Navigation() {
         </button>
 
         {/* Drawer Navigation Links */}
-        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', listStyle: 'none', padding: 0, margin: 0 }}>
-          {['About', 'Honours', 'Fixtures', 'FOS', 'Tours', 'Gallery', 'Contact'].map((item) => (
-            <li key={item}>
-              <Link
-                href="#"
-                onClick={() => setIsOpen(false)}
-                className="drawer-link"
-                style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 700,
-                  letterSpacing: '1px',
-                  color: 'var(--foreground)',
-                  textTransform: 'uppercase',
-                  transition: 'color 0.2s ease'
-                }}
-              >
-                {item}
-              </Link>
+        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', listStyle: 'none', padding: 0, margin: 0, marginTop: '2rem' }}>
+          {navItems.map((item) => (
+            <li key={item.label} style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Link
+                  href={item.href}
+                  onClick={() => !item.children && setIsOpen(false)}
+                  className="drawer-link"
+                  style={{
+                    fontSize: '1.25rem',
+                    fontWeight: 700,
+                    letterSpacing: '1px',
+                    color: 'var(--foreground)',
+                    textTransform: 'uppercase',
+                    transition: 'color 0.2s ease'
+                  }}
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <button 
+                    onClick={() => toggleExpand(item.label)}
+                    style={{ background: 'none', border: 'none', color: 'var(--foreground)', fontSize: '1.5rem', cursor: 'pointer' }}
+                  >
+                    {expandedItem === item.label ? '−' : '+'}
+                  </button>
+                )}
+              </div>
+              
+              {/* Mobile Children Accordion */}
+              {item.children && expandedItem === item.label && (
+                <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', marginTop: '1.5rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+                  {item.children.map(child => (
+                    <li key={child.label}>
+                      <Link
+                        href={child.href}
+                        onClick={() => setIsOpen(false)}
+                        className="drawer-link"
+                        style={{
+                          fontSize: '1rem',
+                          fontWeight: 600,
+                          letterSpacing: '1px',
+                          color: 'var(--foreground-muted)',
+                          textTransform: 'uppercase',
+                          transition: 'color 0.2s ease'
+                        }}
+                      >
+                        {child.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>

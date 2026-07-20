@@ -164,9 +164,6 @@ h1, h2, h3, h4 {
     align-items: center;
     justify-content: center;
   }
-  .nav-logo {
-    left: 1.5rem !important;
-  }
   .nav-logo span {
     font-size: 2rem !important;
   }
@@ -233,4 +230,13 @@ h1, h2, h3, h4 {
 .mobile-drawer-backdrop.open {
   opacity: 1;
   pointer-events: auto;
+}
+
+.page-title {
+  font-size: clamp(2.2rem, 8vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  word-wrap: break-word;
 }
