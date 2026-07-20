@@ -23,6 +23,9 @@ export default function StandardContentLayout({ title, section }: StandardConten
             padding: 3rem !important;
           }
         }
+        .content-img-wrapper {
+          width: 100% !important;
+        }
         @media (max-width: 768px) {
           .content-img-wrapper {
             max-width: 100% !important;
