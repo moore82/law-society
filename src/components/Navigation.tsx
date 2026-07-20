@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navItems = [
@@ -20,6 +21,7 @@ const navItems = [
 ];
 
 export default function Navigation() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
@@ -72,66 +74,72 @@ export default function Navigation() {
           alignItems: 'center',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          {navItems.map((item) => (
-            <li 
-              key={item.label}
-              style={{ position: 'relative' }}
-              onMouseEnter={() => setHoveredItem(item.label)}
-              onMouseLeave={() => setHoveredItem(null)}
-            >
-              <Link
-                href={item.href}
-                style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  color: 'var(--foreground)',
-                  textTransform: 'uppercase',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.25rem'
-                }}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href || (item.children && item.children.some(child => pathname === child.href));
+            return (
+              <li 
+                key={item.label}
+                style={{ position: 'relative' }}
+                onMouseEnter={() => setHoveredItem(item.label)}
+                onMouseLeave={() => setHoveredItem(null)}
               >
-                {item.label}
-                {item.children && <span style={{ fontSize: '0.6rem' }}>▼</span>}
-              </Link>
-              
-              {/* Desktop Dropdown */}
-              {item.children && hoveredItem === item.label && (
-                <div style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  paddingTop: '1.5rem', /* invisible hover bridge */
-                  width: '180px'
-                }}>
-                  <ul className="glass-panel" style={{
+                <Link
+                  href={item.href}
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    letterSpacing: '1px',
+                    color: isActive ? 'var(--accent-red)' : 'var(--foreground)',
+                    textTransform: 'uppercase',
                     display: 'flex',
-                    flexDirection: 'column',
-                    padding: '1rem',
-                    gap: '1.25rem',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    background: 'rgba(10,3,3,0.95)'
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}
+                >
+                  {item.label}
+                  {item.children && <span style={{ fontSize: '0.6rem' }}>▼</span>}
+                </Link>
+                
+                {/* Desktop Dropdown */}
+                {item.children && hoveredItem === item.label && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    paddingTop: '1.5rem', /* invisible hover bridge */
+                    width: '180px'
                   }}>
-                    {item.children.map(child => (
-                      <li key={child.label}>
-                        <Link href={child.href} className="drawer-link" style={{ 
-                          fontSize: '0.8rem', 
-                          fontWeight: 600, 
-                          color: 'var(--foreground-muted)',
-                          textTransform: 'uppercase',
-                          transition: 'color 0.2s ease'
-                        }}>
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
+                    <ul className="glass-panel" style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      padding: '1rem',
+                      gap: '1.25rem',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      background: 'rgba(10,3,3,0.95)'
+                    }}>
+                      {item.children.map(child => {
+                        const isChildActive = pathname === child.href;
+                        return (
+                          <li key={child.label}>
+                            <Link href={child.href} className="drawer-link" style={{ 
+                              fontSize: '0.8rem', 
+                              fontWeight: 600, 
+                              color: isChildActive ? 'var(--accent-red)' : 'var(--foreground-muted)',
+                              textTransform: 'uppercase',
+                              transition: 'color 0.2s ease'
+                            }}>
+                              {child.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* Hamburger Icon */}
@@ -178,60 +186,66 @@ export default function Navigation() {
 
         {/* Drawer Navigation Links */}
         <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', listStyle: 'none', padding: 0, margin: 0, marginTop: '2rem' }}>
-          {navItems.map((item) => (
-            <li key={item.label} style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link
-                  href={item.href}
-                  onClick={() => !item.children && setIsOpen(false)}
-                  className="drawer-link"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 700,
-                    letterSpacing: '1px',
-                    color: 'var(--foreground)',
-                    textTransform: 'uppercase',
-                    transition: 'color 0.2s ease'
-                  }}
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <button 
-                    onClick={() => toggleExpand(item.label)}
-                    style={{ background: 'none', border: 'none', color: 'var(--foreground)', fontSize: '1.5rem', cursor: 'pointer' }}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href || (item.children && item.children.some(child => pathname === child.href));
+            return (
+              <li key={item.label} style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="drawer-link"
+                    style={{
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      letterSpacing: '1px',
+                      color: isActive ? 'var(--accent-red)' : 'var(--foreground)',
+                      textTransform: 'uppercase',
+                      transition: 'color 0.2s ease'
+                    }}
                   >
-                    {expandedItem === item.label ? '−' : '+'}
-                  </button>
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <button 
+                      onClick={() => toggleExpand(item.label)}
+                      style={{ background: 'none', border: 'none', color: 'var(--foreground)', fontSize: '1.5rem', cursor: 'pointer' }}
+                    >
+                      {expandedItem === item.label ? '−' : '+'}
+                    </button>
+                  )}
+                </div>
+                
+                {/* Mobile Children Accordion */}
+                {item.children && expandedItem === item.label && (
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', marginTop: '1.5rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+                    {item.children.map(child => {
+                      const isChildActive = pathname === child.href;
+                      return (
+                        <li key={child.label}>
+                          <Link
+                            href={child.href}
+                            onClick={() => setIsOpen(false)}
+                            className="drawer-link"
+                            style={{
+                              fontSize: '1rem',
+                              fontWeight: 600,
+                              letterSpacing: '1px',
+                              color: isChildActive ? 'var(--accent-red)' : 'var(--foreground-muted)',
+                              textTransform: 'uppercase',
+                              transition: 'color 0.2s ease'
+                            }}
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 )}
-              </div>
-              
-              {/* Mobile Children Accordion */}
-              {item.children && expandedItem === item.label && (
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', marginTop: '1.5rem', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
-                  {item.children.map(child => (
-                    <li key={child.label}>
-                      <Link
-                        href={child.href}
-                        onClick={() => setIsOpen(false)}
-                        className="drawer-link"
-                        style={{
-                          fontSize: '1rem',
-                          fontWeight: 600,
-                          letterSpacing: '1px',
-                          color: 'var(--foreground-muted)',
-                          textTransform: 'uppercase',
-                          transition: 'color 0.2s ease'
-                        }}
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </nav>
