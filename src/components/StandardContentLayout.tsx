@@ -8,6 +8,19 @@ interface StandardContentLayoutProps {
 export default function StandardContentLayout({ title, section }: StandardContentLayoutProps) {
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .content-intro-text,
+          .content-body-text,
+          .content-body-text p {
+            text-align: center !important;
+          }
+          .content-img-wrapper {
+            max-width: 400px !important;
+            margin: 0 auto !important;
+          }
+        }
+      `}</style>
       <section className="container">
         {section && (
           <div style={{ color: 'var(--accent-red)', fontWeight: 600, marginBottom: '0.5rem', fontSize: '1rem', textTransform: 'uppercase' }}>
@@ -18,14 +31,14 @@ export default function StandardContentLayout({ title, section }: StandardConten
         
         {/* Intro */}
         <div style={{ borderTop: '4px solid var(--accent-red)', borderBottom: '2px solid rgba(255,255,255,0.1)', padding: '2rem 0', marginBottom: '3rem' }}>
-          <p className="content-intro">
+          <p className="content-intro-text" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: 600, lineHeight: 1.5, color: 'var(--foreground)' }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel tristique nisl. Phasellus sagittis ex id magna hendrerit lorem ipsum solor.
           </p>
         </div>
 
         {/* Content Area */}
         <div className="glass-panel" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', marginBottom: '4rem', padding: '3rem' }}>
-          <div className="content-text">
+          <div className="content-body-text">
             <p style={{ marginBottom: '1.5rem' }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
@@ -36,7 +49,7 @@ export default function StandardContentLayout({ title, section }: StandardConten
               Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
             </p>
           </div>
-          <div className="content-image-wrapper">
+          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.2)' }}>
             <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
           </div>
         </div>
