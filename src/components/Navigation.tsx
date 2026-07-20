@@ -103,7 +103,12 @@ export default function Navigation() {
             return (
               <li 
                 key={item.label}
-                style={{ position: 'relative' }}
+                style={{ 
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem'
+                }}
                 onMouseEnter={() => setHoveredItem(item.label)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
@@ -116,13 +121,33 @@ export default function Navigation() {
                     color: isActive ? 'var(--accent-red)' : 'var(--foreground)',
                     textTransform: 'uppercase',
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem'
+                    alignItems: 'center'
                   }}
                 >
                   {item.label}
-                  {item.children && <span style={{ fontSize: '0.6rem' }}>▼</span>}
                 </Link>
+                {item.children && (
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setHoveredItem(hoveredItem === item.label ? null : item.label);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: isActive ? 'var(--accent-red)' : 'var(--foreground)',
+                      fontSize: '0.6rem',
+                      cursor: 'pointer',
+                      padding: '0.25rem 0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      opacity: 0.8
+                    }}
+                  >
+                    ▼
+                  </button>
+                )}
                 
                 {/* Desktop Dropdown */}
                 {item.children && hoveredItem === item.label && (

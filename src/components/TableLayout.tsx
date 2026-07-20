@@ -14,16 +14,16 @@ interface TableLayoutProps {
   footerText?: string;
 }
 
-export default function TableLayout({ 
-  title, 
-  section, 
-  headers = ["Year", "Name", "Detail"], 
+export default function TableLayout({
+  title,
+  section,
+  headers = ["Year", "Name", "Detail"],
   rows = Array.from({ length: 10 }).map((_, i) => ({
     col1: `${2026 - i}`,
     col2: i % 2 === 0 ? "John Smith" : "David Jones",
     col3: i % 2 === 0 ? "First Team Player of the Year" : "Clubman of the Year"
   })),
-  footerText = "Rows added & edited by the club via the CMS"
+  footerText = ""
 }: TableLayoutProps) {
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
@@ -34,7 +34,7 @@ export default function TableLayout({
           </div>
         )}
         <h1 className="page-title">{title}</h1>
-        
+
         {/* Divider */}
         <div style={{ borderTop: '4px solid var(--accent-red)', marginBottom: '3rem' }} />
 
@@ -44,11 +44,11 @@ export default function TableLayout({
             <thead>
               <tr style={{ background: '#000000', borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
                 {headers.map((h, i) => (
-                  <th key={i} style={{ 
-                    padding: '1.25rem 2rem', 
-                    fontSize: '0.9rem', 
-                    fontWeight: 700, 
-                    textTransform: 'uppercase', 
+                  <th key={i} style={{
+                    padding: '1.25rem 2rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
                     letterSpacing: '1px',
                     color: '#ffffff'
                   }}>
@@ -59,7 +59,7 @@ export default function TableLayout({
             </thead>
             <tbody>
               {rows.map((row, i) => (
-                <tr key={i} style={{ 
+                <tr key={i} style={{
                   background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent',
                   borderBottom: i < rows.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'
                 }}>
