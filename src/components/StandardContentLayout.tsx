@@ -9,6 +9,20 @@ export default function StandardContentLayout({ title, section }: StandardConten
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <style>{`
+        .content-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1.5rem !important;
+          margin-bottom: 4rem;
+        }
+        @media (min-width: 769px) {
+          .content-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 3rem !important;
+          }
+        }
         @media (max-width: 768px) {
           .content-intro-text,
           .content-body-text,
@@ -37,7 +51,7 @@ export default function StandardContentLayout({ title, section }: StandardConten
         </div>
 
         {/* Content Area */}
-        <div className="glass-panel" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', marginBottom: '4rem', padding: '3rem' }}>
+        <div className="glass-panel content-grid">
           <div className="content-body-text">
             <p style={{ marginBottom: '1.5rem' }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
