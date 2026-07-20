@@ -76,7 +76,7 @@ export default function ContactPage() {
 
       <section className="container">
         <h1 className="page-title">GET IN TOUCH</h1>
-        
+
         {/* Divider */}
         <div style={{ borderTop: '4px solid var(--accent-red)', marginBottom: '3rem' }} />
 
@@ -88,34 +88,34 @@ export default function ContactPage() {
                 <label className="form-label">Name</label>
                 <input type="text" className="form-input" placeholder="Your full name" required />
               </div>
-              
+
               <div className="form-group">
                 <label className="form-label">Email</label>
                 <input type="email" className="form-input" placeholder="Your email address" required />
               </div>
-              
+
               <div className="form-group">
                 <label className="form-label">Subject</label>
                 <input type="text" className="form-input" placeholder="What is this regarding?" required />
               </div>
-              
+
               <div className="form-group" style={{ marginBottom: '2.5rem' }}>
                 <label className="form-label">Message</label>
                 <textarea className="form-textarea" placeholder="Type your message here..." required></textarea>
               </div>
 
-              <button 
-                type="submit" 
-                className="btn-glass" 
-                style={{ 
-                  padding: '1rem 3rem', 
-                  fontSize: '0.9rem', 
-                  fontWeight: 700, 
-                  textTransform: 'uppercase', 
-                  background: 'var(--accent-red)', 
-                  color: '#000000', 
-                  border: 'none', 
-                  cursor: 'pointer' 
+              <button
+                type="submit"
+                className="btn-glass"
+                style={{
+                  padding: '1rem 3rem',
+                  fontSize: '0.9rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  background: 'var(--accent-red)',
+                  color: '#000000',
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
               >
                 Send
@@ -132,15 +132,20 @@ export default function ContactPage() {
 
             {/* Find Us */}
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1.5rem', color: '#ffffff' }}>Find Us</h2>
-            
-            <div className="info-line" style={{ width: '100%' }}></div>
-            <div className="info-line" style={{ width: '90%' }}></div>
-            <div className="info-line" style={{ width: '80%' }}></div>
-            <div className="info-line" style={{ width: '60%', marginBottom: '2rem' }}></div>
 
-            <div style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, letterSpacing: '0.5px' }}>
-              Address · phone · email
-            </div>
+            <p style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, letterSpacing: '0.5px', marginBottom: '2rem' }}>
+              Address Line 1,<br />
+              Address Line 2,<br />
+              Address Line 3,<br />
+              Town, <br />
+              County, <br />
+              Country
+            </p>
+
+            <p style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, letterSpacing: '0.5px', marginBottom: '2rem' }}>
+              Phone: [PHONE_NUMBER]<br />
+              Email: [EMAIL_ADDRESS]
+            </p>
           </div>
         </div>
       </section>
