@@ -1,7 +1,22 @@
-"use client";
 import React from 'react';
+import ContactForm from '@/components/ContactForm';
+import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
 
-export default function ContactPage() {
+export const revalidate = 60;
+
+type Officer = {
+  _id: string;
+  name: string;
+  role: string;
+  image?: any;
+};
+
+export default async function ContactPage() {
+  const officers = await client.fetch<Officer[]>(
+    `*[_type == "officer"] | order(order asc, name asc)`
+  );
+
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <style>{`
@@ -54,22 +69,39 @@ export default function ContactPage() {
           margin-bottom: 2rem;
           width: 100%;
         }
-        .info-line {
-          height: 2px;
-          background: rgba(255, 255, 255, 0.1);
-          margin-bottom: 1rem;
-          width: 100%;
+        
+        .officers-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+        .officer-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 2.5rem 2rem;
+          text-align: center;
+          transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .officer-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.04);
+        }
+        .officer-img {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin: 0 auto 1.5rem auto;
+          border: 2px solid var(--accent-red);
+          background: rgba(255,255,255,0.1);
         }
         
         @media (min-width: 769px) {
           .contact-grid {
             grid-template-columns: 1.2fr 0.8fr;
             gap: 5rem;
-          }
-        }
-        @media (max-width: 768px) {
-          .contact-intro {
-            text-align: center !important;
           }
         }
       `}</style>
@@ -83,44 +115,7 @@ export default function ContactPage() {
         <div className="contact-grid">
           {/* Left Column: Form */}
           <div className="glass-panel" style={{ padding: '3rem' }}>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <div className="form-group">
-                <label className="form-label">Name</label>
-                <input type="text" className="form-input" placeholder="Your full name" required />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Email</label>
-                <input type="email" className="form-input" placeholder="Your email address" required />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Subject</label>
-                <input type="text" className="form-input" placeholder="What is this regarding?" required />
-              </div>
-
-              <div className="form-group" style={{ marginBottom: '2.5rem' }}>
-                <label className="form-label">Message</label>
-                <textarea className="form-textarea" placeholder="Type your message here..." required></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="btn-glass"
-                style={{
-                  padding: '1rem 3rem',
-                  fontSize: '0.9rem',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  background: 'var(--accent-red)',
-                  color: '#000000',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                Send
-              </button>
-            </form>
+            <ContactForm />
           </div>
 
           {/* Right Column: Map & Info */}
@@ -148,6 +143,35 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
+
+        {/* Officers Section */}
+        <div style={{ marginTop: '8rem' }}>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem', color: '#ffffff', textAlign: 'center' }}>Club Officers</h2>
+          <div style={{ width: '60px', height: '4px', background: 'var(--accent-red)', margin: '0 auto 3rem auto' }} />
+          
+          {officers.length === 0 ? (
+            <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
+              <p style={{ color: 'var(--foreground-muted)' }}>No officers have been added yet. Add some in the Sanity Studio!</p>
+            </div>
+          ) : (
+            <div className="officers-grid">
+              {officers.map((officer) => (
+                <div key={officer._id} className="officer-card">
+                  {officer.image ? (
+                    <img src={urlFor(officer.image).width(240).height(240).url()} alt={officer.name} className="officer-img" />
+                  ) : (
+                    <div className="officer-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', color: 'var(--foreground-muted)' }}>
+                      {officer.name.charAt(0)}
+                    </div>
+                  )}
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>{officer.name}</h3>
+                  <p style={{ color: 'var(--accent-red)', fontSize: '0.9rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>{officer.role}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
       </section>
     </main>
   );
