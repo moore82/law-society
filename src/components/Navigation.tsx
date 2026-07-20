@@ -75,7 +75,8 @@ export default function Navigation() {
         alignItems: 'center',
         paddingTop: '2rem',
         paddingBottom: '2rem',
-        position: 'relative'
+        position: 'relative',
+        gap: '2rem'
       }}>
         {/* Logo container */}
         <div className="nav-logo" style={{
