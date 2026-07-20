@@ -18,7 +18,7 @@ html {
 
 body {
   background: var(--background-dark);
-  background-image: linear-gradient(to bottom, rgba(10, 3, 3, 0.7) 0%, rgba(10, 3, 3, 0.95) 100%), url("/img/hero.png");
+  background-image: linear-gradient(to bottom, rgba(10, 3, 3, 0.15) 0%, rgba(10, 3, 3, 0.95) 100%), url("/img/hero.png");
   background-attachment: fixed;
   background-position: center top;
   background-size: cover;
