@@ -17,8 +17,7 @@ export const metadata: Metadata = {
   description: "Elite rugby club celebrating speed, skill, and unparalleled community.",
 };
 
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
+import SiteLayout from "../components/SiteLayout";
 
 export default function RootLayout({
   children,
@@ -28,9 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <Navigation />
-        {children}
-        <Footer />
+        <SiteLayout>
+          {children}
+        </SiteLayout>
       </body>
     </html>
   );

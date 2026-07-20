@@ -35,7 +35,7 @@ export default function GalleryLayout({ title, section, introText }: GalleryLayo
           </div>
         )}
         <h1 className="page-title">{title}</h1>
-        
+
         {/* Intro Divider / Copy */}
         {introText ? (
           <div style={{ borderTop: '4px solid var(--accent-red)', borderBottom: '2px solid rgba(255,255,255,0.1)', padding: '2rem 0', marginBottom: '3rem' }}>
@@ -50,11 +50,11 @@ export default function GalleryLayout({ title, section, introText }: GalleryLayo
         {/* Gallery Grid */}
         <div className="gallery-grid">
           {Array.from({ length: 16 }).map((_, i) => (
-            <div key={i} className="glass-panel" style={{ 
-              aspectRatio: '4/3', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
+            <div key={i} className="glass-panel" style={{
+              aspectRatio: '4/3',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               border: '1px dashed rgba(255,255,255,0.2)',
               padding: 0,
               cursor: 'pointer',
@@ -65,11 +65,6 @@ export default function GalleryLayout({ title, section, introText }: GalleryLayo
               </span>
             </div>
           ))}
-        </div>
-
-        {/* Footer text */}
-        <div style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem', textAlign: 'center', marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2rem' }}>
-          Click any image to enlarge · photos managed by the club
         </div>
       </section>
     </main>

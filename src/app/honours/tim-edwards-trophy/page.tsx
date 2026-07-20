@@ -1,14 +1,29 @@
 import TableLayout from '@/components/TableLayout';
+import { client } from '@/sanity/lib/client';
 
-export default function TimEdwardsTrophyPage() {
+export const revalidate = 60;
+
+type TimEdwardsTrophy = {
+  _id: string;
+  year: string;
+  recipient: string;
+  reason?: string;
+};
+
+export default async function TimEdwardsTrophyPage() {
+  const winners = await client.fetch<TimEdwardsTrophy[]>(
+    `*[_type == "timEdwardsTrophy"] | order(order asc, year desc)`
+  );
+
   return (
     <TableLayout 
       title="TIM EDWARDS TROPHY" 
       section="Honours Board"
-      rows={Array.from({ length: 8 }).map((_, i) => ({
-        col1: `${2026 - i}`,
-        col2: i % 2 === 0 ? "Alexander Campbell" : "Michael Brookes",
-        col3: "Outstanding contribution and leadership award winner"
+      headers={["Year", "Recipient", "Reason for Award"]}
+      rows={winners.map(w => ({
+        col1: w.year,
+        col2: w.recipient,
+        col3: w.reason || "-"
       }))}
     />
   );

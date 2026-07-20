@@ -6,6 +6,13 @@ export const fixtureType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'season',
+      title: 'Season',
+      type: 'reference',
+      to: [{type: 'season'}],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'date',
       title: 'Date & Time',
       type: 'datetime',
@@ -18,8 +25,31 @@ export const fixtureType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'ourTeam',
+      title: 'Our Team',
+      type: 'string',
+      description: 'e.g. First XV, Second XV, Veterans',
+      initialValue: 'First XV',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'venue',
+      title: 'Venue (Home/Away)',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Home', value: 'Home'},
+          {title: 'Away', value: 'Away'},
+          {title: 'Neutral', value: 'Neutral'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'Home',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'location',
-      title: 'Location (Home/Away or Address)',
+      title: 'Venue Details / Address',
       type: 'string',
     }),
     defineField({

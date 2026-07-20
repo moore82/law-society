@@ -1,9 +1,17 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import { officerType } from './officer'
-import { honourType } from './honour'
 import { fixtureType } from './fixture'
 import { galleryImageType } from './galleryImage'
+import { aboutPageType } from './aboutPage'
+import { historyPageType } from './historyPage'
+import { officersPageType } from './officersPage'
+import { honoursPageType } from './honoursPage'
+import { captainType } from './captain'
+import { timEdwardsTrophyType } from './timEdwardsTrophy'
+import { goldenPedroType } from './goldenPedro'
+import { fixturesPageType } from './fixturesPage'
+import { seasonType } from './season'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [officerType, honourType, fixtureType, galleryImageType],
+  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType],
 }

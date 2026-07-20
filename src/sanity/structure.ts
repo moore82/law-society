@@ -4,4 +4,122 @@ import type {StructureResolver} from 'sanity/structure'
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
-    .items(S.documentTypeListItems())
+    .items([
+      // A folder for all "About" related content
+      S.listItem()
+        .title('About')
+        .child(
+          S.list()
+            .title('About Section')
+            .items([
+              // The main About Page
+              S.listItem()
+                .title('About Page')
+                .id('aboutPage')
+                .child(
+                  S.document()
+                    .schemaType('aboutPage')
+                    .documentId('aboutPage')
+                    .title('About Page')
+                ),
+              // The History Page
+              S.listItem()
+                .title('History Page')
+                .id('historyPage')
+                .child(
+                  S.document()
+                    .schemaType('historyPage')
+                    .documentId('historyPage')
+                    .title('History Page')
+                ),
+              // The Officers Page
+              S.listItem()
+                .title('Officers Page')
+                .id('officersPage')
+                .child(
+                  S.document()
+                    .schemaType('officersPage')
+                    .documentId('officersPage')
+                    .title('Officers Page')
+                ),
+              // The Officers list
+              S.listItem()
+                .title('Officers Roster')
+                .schemaType('officer')
+                .child(S.documentTypeList('officer').title('Officers Roster')),
+            ])
+        ),
+
+      // A folder for all "Honours" related content
+      S.listItem()
+        .title('Honours Board')
+        .child(
+          S.list()
+            .title('Honours Section')
+            .items([
+              // The main Honours Page
+              S.listItem()
+                .title('Honours Page')
+                .id('honoursPage')
+                .child(
+                  S.document()
+                    .schemaType('honoursPage')
+                    .documentId('honoursPage')
+                    .title('Honours Page')
+                ),
+              // Captains list
+              S.listItem()
+                .title('Captains')
+                .schemaType('captain')
+                .child(S.documentTypeList('captain').title('Captains')),
+              // Tim Edwards Trophy list
+              S.listItem()
+                .title('Tim Edwards Trophy')
+                .schemaType('timEdwardsTrophy')
+                .child(S.documentTypeList('timEdwardsTrophy').title('Tim Edwards Trophy')),
+              // Golden Pedro list
+              S.listItem()
+                .title('Order of the Golden Pedro')
+                .schemaType('goldenPedro')
+                .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro')),
+            ])
+        ),
+
+      // A folder for all "Fixtures & Results" related content
+      S.listItem()
+        .title('Fixtures & Results')
+        .child(
+          S.list()
+            .title('Fixtures Section')
+            .items([
+              // The main Fixtures Page
+              S.listItem()
+                .title('Fixtures Page')
+                .id('fixturesPage')
+                .child(
+                  S.document()
+                    .schemaType('fixturesPage')
+                    .documentId('fixturesPage')
+                    .title('Fixtures Page')
+                ),
+              // Seasons list
+              S.listItem()
+                .title('Seasons')
+                .schemaType('season')
+                .child(S.documentTypeList('season').title('Seasons')),
+              // All Fixtures list
+              S.listItem()
+                .title('All Fixtures')
+                .schemaType('fixture')
+                .child(S.documentTypeList('fixture').title('All Fixtures')),
+            ])
+        ),
+      
+      // A visual divider
+      S.divider(),
+      
+      // All other document types, filtering out the ones we manually grouped above
+      ...S.documentTypeListItems().filter(
+        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture'].includes(listItem.getId() as string)
+      ),
+    ])
