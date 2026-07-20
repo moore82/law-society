@@ -267,11 +267,12 @@ h1, h2, h3, h4 {
 
 @media (max-width: 768px) {
   .content-intro,
-  .content-text {
-    text-align: center;
+  .content-text,
+  .content-text p {
+    text-align: center !important;
   }
   .content-image-wrapper {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 400px !important;
+    margin: 0 auto !important;
   }
 }
