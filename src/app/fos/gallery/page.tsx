@@ -1,5 +1,5 @@
-import StandardContentLayout from '@/components/StandardContentLayout';
+import GalleryLayout from '@/components/GalleryLayout';
 
-export default function GalleryPage() {
-  return <StandardContentLayout title="GALLERY" section="Festival of Sport" />;
+export default function FosGalleryPage() {
+  return <GalleryLayout title="FOS GALLERY" section="Festival of Sport" />;
 }
