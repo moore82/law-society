@@ -240,3 +240,38 @@ h1, h2, h3, h4 {
   line-height: 1.1;
   word-wrap: break-word;
 }
+
+.content-intro {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.content-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--foreground-muted);
+}
+
+.content-image-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .content-intro,
+  .content-text {
+    text-align: center;
+  }
+  .content-image-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
