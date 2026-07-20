@@ -4,7 +4,6 @@ export default function FixturesPage() {
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <section className="container">
-        <div style={{ color: 'var(--accent-red)', fontWeight: 600, marginBottom: '0.5rem', fontSize: '1rem', textTransform: 'uppercase' }}>Section</div>
         <h1 className="page-title">
           FIXTURES
         </h1>
