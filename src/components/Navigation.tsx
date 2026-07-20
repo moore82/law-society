@@ -1,7 +1,7 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const navItems = [
   {
@@ -49,6 +49,14 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (pathname.startsWith('/fos')) {
+      document.body.style.backgroundImage = 'linear-gradient(to bottom, rgba(10, 3, 3, 0.15) 0%, rgba(10, 3, 3, 0.95) 100%), url("/img/festival.png")';
+    } else {
+      document.body.style.backgroundImage = '';
+    }
+  }, [pathname]);
 
   const toggleExpand = (label: string) => {
     setExpandedItem(expandedItem === label ? null : label);
