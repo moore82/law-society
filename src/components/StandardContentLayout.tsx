@@ -25,7 +25,7 @@ export default function StandardContentLayout({ title, section }: StandardConten
         }
         @media (max-width: 768px) {
           .content-img-wrapper {
-            max-width: 400px !important;
+            max-width: 100% !important;
             margin: 0 auto !important;
           }
         }
