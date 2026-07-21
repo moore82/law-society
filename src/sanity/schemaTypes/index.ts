@@ -14,7 +14,13 @@ import { seasonType } from './season'
 import { toursPageType } from './toursPage'
 import { galleryPageType } from './galleryPage'
 import { contactPageType } from './contactPage'
+import { fosPageType } from './fosPage'
+import { fosGalleryPageType } from './fosGalleryPage'
+import { partnerType } from './partner'
+import { fosWinnerType } from './fosWinner'
+import { getInvolvedPageType } from './getInvolvedPage'
+import { fosRoundupPageType } from './fosRoundupPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType, toursPageType, galleryPageType, contactPageType],
+  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType, toursPageType, galleryPageType, contactPageType, fosPageType, fosGalleryPageType, partnerType, fosWinnerType, getInvolvedPageType, fosRoundupPageType],
 }

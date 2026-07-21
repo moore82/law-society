@@ -149,11 +149,71 @@ export const structure: StructureResolver = (S) =>
             .title('Contact')
         ),
 
+      // Festival of Sport Section
+      S.listItem()
+        .title('Festival of Sport')
+        .child(
+          S.list()
+            .title('Festival of Sport')
+            .items([
+              // FOS Landing Page
+              S.listItem()
+                .title('FOS Page')
+                .id('fosPage')
+                .child(
+                  S.document()
+                    .schemaType('fosPage')
+                    .documentId('fosPage')
+                    .title('FOS Page')
+                ),
+              // Get Involved Page
+              S.listItem()
+                .title('Get Involved')
+                .id('getInvolvedPage')
+                .child(
+                  S.document()
+                    .schemaType('getInvolvedPage')
+                    .documentId('getInvolvedPage')
+                    .title('Get Involved')
+                ),
+              // FOS Gallery
+              S.listItem()
+                .title('Gallery')
+                .id('fosGalleryPage')
+                .child(
+                  S.document()
+                    .schemaType('fosGalleryPage')
+                    .documentId('fosGalleryPage')
+                    .title('Gallery')
+                ),
+              // Roundup Page
+              S.listItem()
+                .title('Roundup')
+                .id('fosRoundupPage')
+                .child(
+                  S.document()
+                    .schemaType('fosRoundupPage')
+                    .documentId('fosRoundupPage')
+                    .title('Roundup')
+                ),
+              // Partners / Sponsors List
+              S.listItem()
+                .title('Partners')
+                .schemaType('partner')
+                .child(S.documentTypeList('partner').title('Partners')),
+              // Previous Winners List
+              S.listItem()
+                .title('Previous Winners')
+                .schemaType('fosWinner')
+                .child(S.documentTypeList('fosWinner').title('Previous Winners')),
+            ])
+        ),
+
       // A visual divider
       S.divider(),
 
       // All other document types, filtering out the ones we manually grouped above
       ...S.documentTypeListItems().filter(
-        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage'].includes(listItem.getId() as string)
+        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'partner', 'fosWinner', 'galleryImage', 'getInvolvedPage', 'fosRoundupPage'].includes(listItem.getId() as string)
       ),
     ])

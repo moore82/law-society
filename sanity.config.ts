@@ -29,13 +29,13 @@ export default defineConfig({
     // Hide singletons from the global "Create new document" menu
     newDocumentOptions: (prev, { creationContext }) => {
       if (creationContext.type === 'global') {
-        return prev.filter((templateItem) => !['aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage'].includes(templateItem.templateId))
+        return prev.filter((templateItem) => !['aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage'].includes(templateItem.templateId))
       }
       return prev
     },
     // Removes the "duplicate" action on Singleton documents
     actions: (prev, { schemaType }) => {
-      if (['aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage'].includes(schemaType)) {
+      if (['aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage'].includes(schemaType)) {
         return prev.filter(({ action }) => !['unpublish', 'delete', 'duplicate'].includes(action))
       }
       return prev

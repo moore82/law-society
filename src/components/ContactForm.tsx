@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 
 interface ContactFormProps {
   recipientEmail?: string;
+  fixedSubject: string;
 }
 
-export default function ContactForm({ recipientEmail }: ContactFormProps) {
+export default function ContactForm({ recipientEmail, fixedSubject }: ContactFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
         body: JSON.stringify({
           name,
           email,
-          subject,
+          subject: fixedSubject,
           message,
           recipientEmail,
         }),
@@ -42,7 +43,6 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
       // Optional: Clear form here
       // setName('');
       // setEmail('');
-      // setSubject('');
       // setMessage('');
     } catch (error) {
       console.error(error);
@@ -53,6 +53,13 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
+      {status === 'Message Sent!' ? (
+        <div style={{ padding: '2rem', background: 'rgba(0, 255, 0, 0.1)', border: '1px solid var(--accent-red)', borderRadius: '8px', color: '#ffffff', textAlign: 'center', marginBottom: '2rem' }}>
+          <h3 style={{ margin: '0 0 1rem 0', color: 'var(--accent-red)' }}>Thank You!</h3>
+          <p style={{ margin: 0 }}>Your message has been sent successfully. We will be in touch soon.</p>
+        </div>
+      ) : null}
+
       <div className="form-group">
         <label className="form-label">Name</label>
         <input 
@@ -74,18 +81,6 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
           required 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      <div className="form-group">
-        <label className="form-label">Subject</label>
-        <input 
-          type="text" 
-          className="form-input" 
-          placeholder="What is this regarding?" 
-          required 
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
         />
       </div>
 

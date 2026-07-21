@@ -23,6 +23,7 @@ type ContactPageData = {
   phone: string;
   email: string;
   formRecipientEmail?: string;
+  emailSubject?: string;
   googleMapEmbedUrl?: string;
 };
 
@@ -133,7 +134,10 @@ export default async function ContactPage() {
         <div className="contact-grid">
           {/* Left Column: Form */}
           <div className="glass-panel" style={{ padding: '3rem' }}>
-            <ContactForm recipientEmail={pageData?.formRecipientEmail} />
+            <ContactForm 
+              recipientEmail={pageData?.formRecipientEmail} 
+              fixedSubject={pageData?.emailSubject || 'New Contact Form Submission'}
+            />
           </div>
 
           {/* Right Column: Map & Info */}

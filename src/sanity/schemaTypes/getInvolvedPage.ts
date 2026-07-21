@@ -1,15 +1,15 @@
 import {defineField, defineType} from 'sanity'
 
-export const contactPageType = defineType({
-  name: 'contactPage',
-  title: 'Contact',
+export const getInvolvedPageType = defineType({
+  name: 'getInvolvedPage',
+  title: 'FOS Get Involved',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
       title: 'Page Title',
       type: 'string',
-      initialValue: 'GET IN TOUCH',
+      initialValue: 'GET INVOLVED',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -56,14 +56,14 @@ export const contactPageType = defineType({
       name: 'formRecipientEmail',
       title: 'Contact Form Recipient Email',
       type: 'string',
-      description: 'The email address where contact form submissions will be sent.',
+      description: 'The email address where get involved form submissions will be sent.',
     }),
     defineField({
       name: 'emailSubject',
       title: 'Email Subject',
       type: 'string',
       description: 'The fixed subject line for emails sent from this form.',
-      initialValue: 'New Contact Form Submission',
+      initialValue: 'FOS: Get Involved',
     }),
     defineField({
       name: 'googleMapEmbedUrl',
