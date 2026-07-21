@@ -1,4 +1,4 @@
-import type {StructureResolver} from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -42,11 +42,12 @@ export const structure: StructureResolver = (S) =>
                     .documentId('officersPage')
                     .title('Officers Page')
                 ),
+
               // The Officers list
               S.listItem()
-                .title('Officers Roster')
+                .title('Officers List')
                 .schemaType('officer')
-                .child(S.documentTypeList('officer').title('Officers Roster')),
+                .child(S.documentTypeList('officer').title('Officers List')),
             ])
         ),
 
@@ -69,19 +70,19 @@ export const structure: StructureResolver = (S) =>
                 ),
               // Captains list
               S.listItem()
-                .title('Captains')
+                .title('Captains Page')
                 .schemaType('captain')
-                .child(S.documentTypeList('captain').title('Captains')),
+                .child(S.documentTypeList('captain').title('Captains Page')),
               // Tim Edwards Trophy list
               S.listItem()
-                .title('Tim Edwards Trophy')
+                .title('Tim Edwards Trophy Page')
                 .schemaType('timEdwardsTrophy')
-                .child(S.documentTypeList('timEdwardsTrophy').title('Tim Edwards Trophy')),
+                .child(S.documentTypeList('timEdwardsTrophy').title('Tim Edwards Trophy Page')),
               // Golden Pedro list
               S.listItem()
-                .title('Order of the Golden Pedro')
+                .title('Order of the Golden Pedro Page')
                 .schemaType('goldenPedro')
-                .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro')),
+                .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro Page')),
             ])
         ),
 
@@ -104,22 +105,55 @@ export const structure: StructureResolver = (S) =>
                 ),
               // Seasons list
               S.listItem()
-                .title('Seasons')
+                .title('Seasons List')
                 .schemaType('season')
-                .child(S.documentTypeList('season').title('Seasons')),
+                .child(S.documentTypeList('season').title('Seasons List')),
               // All Fixtures list
               S.listItem()
-                .title('All Fixtures')
+                .title('Fixtures')
                 .schemaType('fixture')
-                .child(S.documentTypeList('fixture').title('All Fixtures')),
+                .child(S.documentTypeList('fixture').title('Fixtures')),
             ])
         ),
-      
+
+      // The Tours Page
+      S.listItem()
+        .title('Tours')
+        .id('toursPage')
+        .child(
+          S.document()
+            .schemaType('toursPage')
+            .documentId('toursPage')
+            .title('Tours')
+        ),
+
+      // The Gallery Page
+      S.listItem()
+        .title('Gallery')
+        .id('galleryPage')
+        .child(
+          S.document()
+            .schemaType('galleryPage')
+            .documentId('galleryPage')
+            .title('Gallery')
+        ),
+
+      // The Contact Page
+      S.listItem()
+        .title('Contact')
+        .id('contactPage')
+        .child(
+          S.document()
+            .schemaType('contactPage')
+            .documentId('contactPage')
+            .title('Contact')
+        ),
+
       // A visual divider
       S.divider(),
-      
+
       // All other document types, filtering out the ones we manually grouped above
       ...S.documentTypeListItems().filter(
-        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture'].includes(listItem.getId() as string)
+        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage'].includes(listItem.getId() as string)
       ),
     ])

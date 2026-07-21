@@ -11,7 +11,10 @@ import { timEdwardsTrophyType } from './timEdwardsTrophy'
 import { goldenPedroType } from './goldenPedro'
 import { fixturesPageType } from './fixturesPage'
 import { seasonType } from './season'
+import { toursPageType } from './toursPage'
+import { galleryPageType } from './galleryPage'
+import { contactPageType } from './contactPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType],
+  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType, toursPageType, galleryPageType, contactPageType],
 }

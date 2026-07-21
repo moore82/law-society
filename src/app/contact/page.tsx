@@ -12,9 +12,27 @@ type Officer = {
   image?: any;
 };
 
+type ContactPageData = {
+  title: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  town: string;
+  county: string;
+  country: string;
+  phone: string;
+  email: string;
+  formRecipientEmail?: string;
+  googleMapEmbedUrl?: string;
+};
+
 export default async function ContactPage() {
   const officers = await client.fetch<Officer[]>(
     `*[_type == "officer"] | order(order asc, name asc)`
+  );
+
+  const pageData = await client.fetch<ContactPageData>(
+    `*[_type == "contactPage" && _id == "contactPage"][0]`
   );
 
   return (
@@ -107,7 +125,7 @@ export default async function ContactPage() {
       `}</style>
 
       <section className="container">
-        <h1 className="page-title">GET IN TOUCH</h1>
+        <h1 className="page-title">{pageData?.title || 'GET IN TOUCH'}</h1>
 
         {/* Divider */}
         <div style={{ borderTop: '4px solid var(--accent-red)', marginBottom: '3rem' }} />
@@ -115,62 +133,50 @@ export default async function ContactPage() {
         <div className="contact-grid">
           {/* Left Column: Form */}
           <div className="glass-panel" style={{ padding: '3rem' }}>
-            <ContactForm />
+            <ContactForm recipientEmail={pageData?.formRecipientEmail} />
           </div>
 
           {/* Right Column: Map & Info */}
           <div>
-            {/* Map Placeholder */}
-            <div className="map-placeholder">
-              <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>MAP PLACEHOLDER</span>
-            </div>
+            {/* Map Area */}
+            {pageData?.googleMapEmbedUrl ? (
+              <div style={{ marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/10', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <iframe 
+                  src={pageData.googleMapEmbedUrl} 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            ) : (
+              <div className="map-placeholder">
+                <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>MAP PLACEHOLDER</span>
+              </div>
+            )}
 
             {/* Find Us */}
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1.5rem', color: '#ffffff' }}>Find Us</h2>
 
             <p style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, letterSpacing: '0.5px', marginBottom: '2rem' }}>
-              Address Line 1,<br />
-              Address Line 2,<br />
-              Address Line 3,<br />
-              Town, <br />
-              County, <br />
-              Country
+              {pageData?.addressLine1 || 'Address Line 1'},<br />
+              {pageData?.addressLine2 || 'Address Line 2'},<br />
+              {pageData?.addressLine3 || 'Address Line 3'},<br />
+              {pageData?.town || 'Town'}, <br />
+              {pageData?.county || 'County'}, <br />
+              {pageData?.country || 'Country'}
             </p>
 
             <p style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, letterSpacing: '0.5px', marginBottom: '2rem' }}>
-              Phone: [PHONE_NUMBER]<br />
-              Email: [EMAIL_ADDRESS]
+              Phone: {pageData?.phone || '[PHONE_NUMBER]'}<br />
+              Email: {pageData?.email || '[EMAIL_ADDRESS]'}
             </p>
           </div>
         </div>
 
-        {/* Officers Section */}
-        <div style={{ marginTop: '8rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem', color: '#ffffff', textAlign: 'center' }}>Club Officers</h2>
-          <div style={{ width: '60px', height: '4px', background: 'var(--accent-red)', margin: '0 auto 3rem auto' }} />
-          
-          {officers.length === 0 ? (
-            <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
-              <p style={{ color: 'var(--foreground-muted)' }}>No officers have been added yet. Add some in the Sanity Studio!</p>
-            </div>
-          ) : (
-            <div className="officers-grid">
-              {officers.map((officer) => (
-                <div key={officer._id} className="officer-card">
-                  {officer.image ? (
-                    <img src={urlFor(officer.image).width(240).height(240).url()} alt={officer.name} className="officer-img" />
-                  ) : (
-                    <div className="officer-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', color: 'var(--foreground-muted)' }}>
-                      {officer.name.charAt(0)}
-                    </div>
-                  )}
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>{officer.name}</h3>
-                  <p style={{ color: 'var(--accent-red)', fontSize: '0.9rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>{officer.role}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+
 
       </section>
     </main>

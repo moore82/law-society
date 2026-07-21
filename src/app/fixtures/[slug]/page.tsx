@@ -109,13 +109,9 @@ export default async function DynamicFixturesPage({ params }: { params: Promise<
                     const awayTeam = fixture.venue === 'Away' ? `Law Society ${fixture.ourTeam || ''}`.trim() : fixture.opponent;
 
                     return (
-                      <div key={fixture._id} className="glass-panel" style={{ padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.8, flexWrap: 'wrap', gap: '1rem' }}>
-                        <div>
-                          <div style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-                            {new Date(fixture.date).toLocaleDateString('en-GB')} {fixture.competition ? `• ${fixture.competition}` : ''}
-                          </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexGrow: 1, justifyContent: 'center' }}>
+                      <div key={fixture._id} className="glass-panel" style={{ padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 0.8, gap: '0.75rem' }}>
+                        {/* Result Row */}
+                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', width: '100%', maxWidth: '800px', justifyContent: 'center' }}>
                           <span style={{ fontSize: '1.25rem', fontWeight: 600, textAlign: 'right', flex: 1 }}>{homeTeam}</span>
                           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', borderRadius: '8px' }}>
                             <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-red)' }}>{fixture.homeScore ?? 0}</span>
@@ -123,6 +119,12 @@ export default async function DynamicFixturesPage({ params }: { params: Promise<
                             <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-red)' }}>{fixture.awayScore ?? 0}</span>
                           </div>
                           <span style={{ fontSize: '1.25rem', fontWeight: 600, textAlign: 'left', flex: 1 }}>{awayTeam}</span>
+                        </div>
+                        {/* Extra Info Underneath */}
+                        <div style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem' }}>
+                          {new Date(fixture.date).toLocaleDateString('en-GB')} 
+                          {fixture.competition ? ` • ${fixture.competition}` : ''}
+                          {fixture.location ? ` • ${fixture.location}` : ''}
                         </div>
                       </div>
                     );
