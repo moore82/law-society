@@ -8,6 +8,7 @@ const navItems = [
     label: 'About the Club',
     href: '/about',
     children: [
+      { label: 'Articles', href: '/articles' },
       { label: 'History', href: '/about/history' },
       { label: 'Officers of the Club', href: '/about/officers' }
     ]
@@ -16,9 +17,10 @@ const navItems = [
     label: 'Honours Board',
     href: '/honours',
     children: [
-      { label: 'Captains', href: '/honours/captains' },
       { label: 'Tim Edwards Trophy', href: '/honours/tim-edwards-trophy' },
-      { label: 'Golden Pedro', href: '/honours/order-of-the-golden-pedro' }
+      { label: 'Golden Pedro', href: '/honours/order-of-the-golden-pedro' },
+      { label: 'Captains', href: '/honours/captains' },
+      { label: 'Surrey Vice Presidents', href: '/honours/surrey-vice-presidents' }
     ]
   },
   {

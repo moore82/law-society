@@ -129,12 +129,12 @@ export default async function FixturesPage() {
                       }
                     `}</style>
                     <td style={{ padding: '1.5rem', fontWeight: 600, fontSize: '1.1rem' }}>
-                      <Link href={`/fixtures/${season.slug.current}`} style={{ color: 'var(--foreground)' }}>
+                      <Link href={`/fixtures/${season.slug?.current || season._id}`} style={{ color: 'var(--foreground)' }}>
                         {season.name}
                       </Link>
                     </td>
                     <td style={{ padding: '1.5rem', textAlign: 'right' }}>
-                      <Link href={`/fixtures/${season.slug.current}`} style={{ color: 'var(--accent-red)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '1px' }}>
+                      <Link href={`/fixtures/${season.slug?.current || season._id}`} style={{ color: 'var(--accent-red)', fontWeight: 600, textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '1px' }}>
                         View Fixtures &rarr;
                       </Link>
                     </td>

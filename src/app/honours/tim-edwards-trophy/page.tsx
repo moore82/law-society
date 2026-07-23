@@ -19,6 +19,7 @@ export default async function TimEdwardsTrophyPage() {
     <TableLayout 
       title="TIM EDWARDS TROPHY" 
       section="Honours Board"
+      intro={<p style={{ fontStyle: 'italic', opacity: 0.8 }}>[Flapper is providing background text]</p>}
       headers={["Year", "Recipient", "Reason for Award"]}
       rows={winners.map(w => ({
         col1: w.year,

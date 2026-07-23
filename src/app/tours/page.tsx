@@ -2,6 +2,7 @@ import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import InteractiveGallery from '@/components/InteractiveGallery';
+import ToursTabs from '@/components/ToursTabs';
 
 export const revalidate = 60;
 
@@ -12,13 +13,45 @@ type ToursPageData = {
   images: any[];
 };
 
+type Tour = {
+  year: number;
+  venues: string[];
+};
+
 export default async function ToursPage() {
-  const data = await client.fetch<ToursPageData>(
-    `*[_type == "toursPage" && _id == "toursPage"][0]`
-  );
+  const [data, pastTours] = await Promise.all([
+    client.fetch<ToursPageData>(`*[_type == "toursPage" && _id == "toursPage"][0]`),
+    client.fetch<Tour[]>(`*[_type == "tour"] | order(year desc)`)
+  ]);
 
   const mainImage = data?.images && data.images.length > 0 ? data.images[0] : null;
   const galleryImages = data?.images && data.images.length > 1 ? data.images.slice(1) : [];
+
+  const seasonContent = (
+    <div className="glass-panel content-grid" style={{ padding: '2rem', marginBottom: '3rem' }}>
+      <div className="content-body-text portable-text" style={{ color: 'var(--foreground)' }}>
+        {data?.content ? (
+          <PortableText value={data.content} />
+        ) : (
+          <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: 'var(--foreground-muted)' }}>
+            Placeholder for Season 2026/2027 tours. Add your content in the Sanity Studio.
+          </p>
+        )}
+      </div>
+      
+      <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
+        {mainImage ? (
+          <img 
+            src={urlFor(mainImage).width(800).url()} 
+            alt={mainImage.alt || 'Tours Image'} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '12px' }} 
+          />
+        ) : (
+          <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
@@ -28,7 +61,6 @@ export default async function ToursPage() {
           grid-template-columns: 1fr;
           gap: 2rem;
           padding: 1.5rem !important;
-          margin-bottom: 4rem;
         }
         @media (min-width: 769px) {
           .content-grid {
@@ -68,45 +100,14 @@ export default async function ToursPage() {
           </p>
         </div>
 
-        {/* Content Area */}
-        <div className="glass-panel content-grid">
-          <div className="content-body-text portable-text" style={{ color: 'var(--foreground)' }}>
-            {data?.content ? (
-              <PortableText value={data.content} />
-            ) : (
-              <>
-                <p style={{ marginBottom: '1.5rem' }}>
-                  Add your tours content in the Sanity Studio! This layout will automatically update to display the rich text you provide.
-                </p>
-              </>
-            )}
-          </div>
-          
-          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
-            {mainImage ? (
-              <img 
-                src={urlFor(mainImage).width(800).url()} 
-                alt={mainImage.alt || 'Tours Image'} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '12px' }} 
-              />
-            ) : (
-              <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
-            )}
-          </div>
-        </div>
+        <ToursTabs seasonContent={seasonContent} pastToursData={pastTours} />
 
-        {/* Photos Grid using the Interactive Gallery for the remaining images */}
         {galleryImages.length > 0 ? (
-          <InteractiveGallery images={galleryImages} />
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3].map(i => (
-               <div key={i} className="glass-panel" style={{ aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.2)', padding: 0 }}>
-                 <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>PHOTO {i}</span>
-               </div>
-            ))}
+          <div style={{ marginTop: '4rem' }}>
+            <h2 style={{ fontSize: '2rem', marginBottom: '2rem', borderBottom: '2px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>Tour Gallery</h2>
+            <InteractiveGallery images={galleryImages} />
           </div>
-        )}
+        ) : null}
       </section>
     </main>
   );

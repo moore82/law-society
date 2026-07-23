@@ -18,6 +18,12 @@ export const officerType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'season',
+      title: 'Season',
+      type: 'string',
+      description: 'The season this officer served (e.g., 1965-66)',
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'image',

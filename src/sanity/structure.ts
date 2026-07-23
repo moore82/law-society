@@ -5,6 +5,17 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
+      // The Home Page
+      S.listItem()
+        .title('Home Page')
+        .id('homePage')
+        .child(
+          S.document()
+            .schemaType('homePage')
+            .documentId('homePage')
+            .title('Home Page')
+        ),
+
       // A folder for all "About" related content
       S.listItem()
         .title('About')
@@ -22,6 +33,12 @@ export const structure: StructureResolver = (S) =>
                     .documentId('aboutPage')
                     .title('About Page')
                 ),
+                
+              // Articles
+              S.listItem()
+                .title('Articles')
+                .schemaType('article')
+                .child(S.documentTypeList('article').title('Articles')),
               // The History Page
               S.listItem()
                 .title('History Page')
@@ -68,11 +85,6 @@ export const structure: StructureResolver = (S) =>
                     .documentId('honoursPage')
                     .title('Honours Page')
                 ),
-              // Captains list
-              S.listItem()
-                .title('Captains Page')
-                .schemaType('captain')
-                .child(S.documentTypeList('captain').title('Captains Page')),
               // Tim Edwards Trophy list
               S.listItem()
                 .title('Tim Edwards Trophy Page')
@@ -83,6 +95,26 @@ export const structure: StructureResolver = (S) =>
                 .title('Order of the Golden Pedro Page')
                 .schemaType('goldenPedro')
                 .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro Page')),
+              // Captains list
+              S.listItem()
+                .title('Captains Page')
+                .schemaType('captain')
+                .child(S.documentTypeList('captain').title('Captains Page')),
+              // Surrey Vice Presidents Page
+              S.listItem()
+                .title('Surrey Vice Presidents Page')
+                .id('surreyVicePresidentsPage')
+                .child(
+                  S.document()
+                    .schemaType('surreyVicePresidentsPage')
+                    .documentId('surreyVicePresidentsPage')
+                    .title('Surrey Vice Presidents Page')
+                ),
+              // Surrey Vice Presidents List
+              S.listItem()
+                .title('Surrey Vice Presidents List')
+                .schemaType('surreyVicePresident')
+                .child(S.documentTypeList('surreyVicePresident').title('Surrey Vice Presidents List')),
             ])
         ),
 
@@ -114,39 +146,6 @@ export const structure: StructureResolver = (S) =>
                 .schemaType('fixture')
                 .child(S.documentTypeList('fixture').title('Fixtures')),
             ])
-        ),
-
-      // The Tours Page
-      S.listItem()
-        .title('Tours')
-        .id('toursPage')
-        .child(
-          S.document()
-            .schemaType('toursPage')
-            .documentId('toursPage')
-            .title('Tours')
-        ),
-
-      // The Gallery Page
-      S.listItem()
-        .title('Gallery')
-        .id('galleryPage')
-        .child(
-          S.document()
-            .schemaType('galleryPage')
-            .documentId('galleryPage')
-            .title('Gallery')
-        ),
-
-      // The Contact Page
-      S.listItem()
-        .title('Contact')
-        .id('contactPage')
-        .child(
-          S.document()
-            .schemaType('contactPage')
-            .documentId('contactPage')
-            .title('Contact')
         ),
 
       // Festival of Sport Section
@@ -209,11 +208,122 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
 
+      // The Tours Section
+      S.listItem()
+        .title('Tours')
+        .child(
+          S.list()
+            .title('Tours Section')
+            .items([
+              // The main Tours Page
+              S.listItem()
+                .title('Tours Page')
+                .id('toursPage')
+                .child(
+                  S.document()
+                    .schemaType('toursPage')
+                    .documentId('toursPage')
+                    .title('Tours Page')
+                ),
+              // Historical Tours List
+              S.listItem()
+                .title('Historical Tours')
+                .schemaType('tour')
+                .child(S.documentTypeList('tour').title('Historical Tours')),
+            ])
+        ),
+
+      // The Gallery Page
+      S.listItem()
+        .title('Gallery')
+        .id('galleryPage')
+        .child(
+          S.document()
+            .schemaType('galleryPage')
+            .documentId('galleryPage')
+            .title('Gallery')
+        ),
+
+      // The Contact Page
+      S.listItem()
+        .title('Contact')
+        .id('contactPage')
+        .child(
+          S.document()
+            .schemaType('contactPage')
+            .documentId('contactPage')
+            .title('Contact')
+        ),
+
+      // A folder for all "Footer & Legal" related content
+      S.listItem()
+        .title('Footer & Legal')
+        .child(
+          S.list()
+            .title('Footer & Legal')
+            .items([
+              S.listItem()
+                .title('Opening Hours')
+                .id('openingHoursPage')
+                .child(
+                  S.document()
+                    .schemaType('openingHoursPage')
+                    .documentId('openingHoursPage')
+                    .title('Opening Hours')
+                ),
+              S.listItem()
+                .title('Social Links')
+                .id('socialLinksPage')
+                .child(
+                  S.document()
+                    .schemaType('socialLinksPage')
+                    .documentId('socialLinksPage')
+                    .title('Social Links')
+                ),
+              S.listItem()
+                .title('Sitemap')
+                .id('sitemapPage')
+                .child(
+                  S.document()
+                    .schemaType('sitemapPage')
+                    .documentId('sitemapPage')
+                    .title('Sitemap')
+                ),
+              S.listItem()
+                .title('Privacy Policy')
+                .id('privacyPolicyPage')
+                .child(
+                  S.document()
+                    .schemaType('privacyPolicyPage')
+                    .documentId('privacyPolicyPage')
+                    .title('Privacy Policy')
+                ),
+              S.listItem()
+                .title('Cookie Policy')
+                .id('cookiePolicyPage')
+                .child(
+                  S.document()
+                    .schemaType('cookiePolicyPage')
+                    .documentId('cookiePolicyPage')
+                    .title('Cookie Policy')
+                ),
+              S.listItem()
+                .title('Terms of Service')
+                .id('termsOfServicePage')
+                .child(
+                  S.document()
+                    .schemaType('termsOfServicePage')
+                    .documentId('termsOfServicePage')
+                    .title('Terms of Service')
+                ),
+            ])
+        ),
+
       // A visual divider
       S.divider(),
 
       // All other document types, filtering out the ones we manually grouped above
       ...S.documentTypeListItems().filter(
-        (listItem) => !['aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'partner', 'fosWinner', 'galleryImage', 'getInvolvedPage', 'fosRoundupPage'].includes(listItem.getId() as string)
+        (listItem) => !['homePage', 'article', 'aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'partner', 'fosWinner', 'galleryImage', 'getInvolvedPage', 'fosRoundupPage', 'openingHoursPage', 'socialLinksPage', 'sitemapPage', 'privacyPolicyPage', 'cookiePolicyPage', 'termsOfServicePage', 'surreyVicePresident', 'surreyVicePresidentsPage', 'tour'].includes(listItem.getId() as string)
       ),
     ])

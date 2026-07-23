@@ -20,7 +20,29 @@ import { partnerType } from './partner'
 import { fosWinnerType } from './fosWinner'
 import { getInvolvedPageType } from './getInvolvedPage'
 import { fosRoundupPageType } from './fosRoundupPage'
+import { homePageType } from './homePage'
+import { articleType } from './article'
+import { surreyVicePresidentType } from './surreyVicePresident'
+import { surreyVicePresidentsPageType } from './surreyVicePresidentsPage'
+import { tourType } from './tour'
+
+import openingHoursPageType from './openingHoursPage'
+import socialLinksPageType from './socialLinksPage'
+import sitemapPageType from './sitemapPage'
+import privacyPolicyPageType from './privacyPolicyPage'
+import cookiePolicyPageType from './cookiePolicyPage'
+import termsOfServicePageType from './termsOfServicePage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [officerType, fixtureType, galleryImageType, aboutPageType, historyPageType, officersPageType, honoursPageType, captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, seasonType, toursPageType, galleryPageType, contactPageType, fosPageType, fosGalleryPageType, partnerType, fosWinnerType, getInvolvedPageType, fosRoundupPageType],
+  types: [
+    homePageType, articleType, officerType, fixtureType, galleryImageType, 
+    aboutPageType, historyPageType, officersPageType, honoursPageType, 
+    captainType, timEdwardsTrophyType, goldenPedroType, fixturesPageType, 
+    seasonType, toursPageType, galleryPageType, contactPageType, 
+    fosPageType, fosGalleryPageType, partnerType, fosWinnerType, 
+    getInvolvedPageType, fosRoundupPageType,
+    surreyVicePresidentType, surreyVicePresidentsPageType, tourType,
+    openingHoursPageType, socialLinksPageType, sitemapPageType,
+    privacyPolicyPageType, cookiePolicyPageType, termsOfServicePageType
+  ],
 }

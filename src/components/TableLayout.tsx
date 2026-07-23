@@ -10,6 +10,7 @@ interface TableRow {
 interface TableLayoutProps {
   title: string;
   section?: string;
+  intro?: React.ReactNode;
   headers?: string[];
   rows?: TableRow[];
   footerText?: string;
@@ -18,6 +19,7 @@ interface TableLayoutProps {
 export default function TableLayout({
   title,
   section,
+  intro,
   headers = ["Year", "Name", "Detail"],
   rows = Array.from({ length: 10 }).map((_, i) => ({
     col1: `${2026 - i}`,
@@ -35,6 +37,12 @@ export default function TableLayout({
           </div>
         )}
         <h1 className="page-title">{title}</h1>
+
+        {intro && (
+          <div style={{ marginBottom: '2rem', fontSize: '1.1rem', color: 'var(--foreground)' }}>
+            {intro}
+          </div>
+        )}
 
         {/* Divider */}
         <div style={{ borderTop: '4px solid var(--accent-red)', marginBottom: '3rem' }} />

@@ -4,6 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
+import CookieBanner from "./CookieBanner";
 
 export default function SiteLayout({
   children,
@@ -24,6 +25,7 @@ export default function SiteLayout({
       <Navigation />
       {children}
       <Footer />
+      <CookieBanner />
     </>
   );
 }

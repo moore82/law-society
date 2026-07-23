@@ -19,6 +19,7 @@ export default async function OrderOfTheGoldenPedroPage() {
     <TableLayout 
       title="ORDER OF THE GOLDEN PEDRO" 
       section="Honours Board"
+      intro={<p style={{ fontStyle: 'italic', opacity: 0.8 }}>[Text to come]</p>}
       headers={["Year", "Inductee", "Reason for Induction"]}
       rows={inductees.map(g => ({
         col1: g.year,

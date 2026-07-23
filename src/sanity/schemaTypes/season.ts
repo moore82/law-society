@@ -29,6 +29,13 @@ export const seasonType = defineType({
       type: 'number',
       description: 'Higher numbers appear first. e.g. 2026 for the 26/27 season.',
     }),
+    defineField({
+      name: 'isCurrentSeason',
+      title: 'Is Current Season',
+      type: 'boolean',
+      description: 'Check this box if this is the current active season.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
