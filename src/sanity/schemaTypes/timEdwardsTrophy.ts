@@ -18,11 +18,7 @@ export const timEdwardsTrophyType = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: 'reason',
-      title: 'Reason for Award',
-      type: 'string',
-    }),
+
     defineField({
       name: 'order',
       title: 'Sort Order',
