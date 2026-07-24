@@ -8,6 +8,8 @@ type Captain = {
   season: string;
   firstXv?: string;
   secondXv?: string;
+  thirdXv?: string;
+  fourthXv?: string;
 };
 
 export default async function CaptainsPage() {
@@ -19,11 +21,13 @@ export default async function CaptainsPage() {
     <TableLayout 
       title="CAPTAINS" 
       section="Honours Board"
-      headers={["Season", "First XV Captain", "Second XV Captain"]}
+      headers={["SEASON", "1ST XV", "2ND XV", "3RD XV", "4TH XV"]}
       rows={captains.map(c => ({
         col1: c.season,
         col2: c.firstXv || "-",
-        col3: c.secondXv || "-"
+        col3: c.secondXv || "-",
+        col4: c.thirdXv || "-",
+        col5: c.fourthXv || "-"
       }))}
     />
   );

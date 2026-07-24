@@ -23,6 +23,16 @@ export const captainType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'thirdXv',
+      title: 'Third XV Captain',
+      type: 'string',
+    }),
+    defineField({
+      name: 'fourthXv',
+      title: 'Fourth XV Captain',
+      type: 'string',
+    }),
+    defineField({
       name: 'order',
       title: 'Sort Order',
       type: 'number',
