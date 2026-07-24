@@ -7,7 +7,6 @@ type GoldenPedro = {
   _id: string;
   year: string;
   inductee: string;
-  reason?: string;
 };
 
 export default async function OrderOfTheGoldenPedroPage() {
@@ -20,11 +19,10 @@ export default async function OrderOfTheGoldenPedroPage() {
       title="ORDER OF THE GOLDEN PEDRO" 
       section="Honours Board"
       intro={<p style={{ fontStyle: 'italic', opacity: 0.8 }}>[Text to come]</p>}
-      headers={["Year", "Inductee", "Reason for Induction"]}
+      headers={["Year", "Inductee"]}
       rows={inductees.map(g => ({
         col1: g.year,
-        col2: g.inductee,
-        col3: g.reason || "-"
+        col2: g.inductee
       }))}
     />
   );

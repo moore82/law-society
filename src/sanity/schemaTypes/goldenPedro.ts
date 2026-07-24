@@ -18,11 +18,7 @@ export const goldenPedroType = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: 'reason',
-      title: 'Reason for Induction',
-      type: 'string',
-    }),
+
     defineField({
       name: 'order',
       title: 'Sort Order',
