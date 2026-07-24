@@ -14,6 +14,7 @@ type OfficersPageData = {
 type OfficerData = {
   name: string;
   role: string;
+  season: string;
   image: any;
 };
 
@@ -23,10 +24,30 @@ export default async function OfficersPage() {
   );
   
   const officers = await client.fetch<OfficerData[]>(
-    `*[_type == "officer"] | order(order asc)`
+    `*[_type == "officer"]`
   );
 
   const mainImage = pageData?.images && pageData.images.length > 0 ? pageData.images[0] : null;
+
+  // Group by season
+  const seasonsMap: Record<string, Record<string, OfficerData>> = {};
+  
+  officers.forEach(officer => {
+    if (!officer.season) return;
+    if (!seasonsMap[officer.season]) {
+      seasonsMap[officer.season] = {};
+    }
+    seasonsMap[officer.season][officer.role] = officer;
+  });
+
+  // Sort seasons descending (e.g. 2026/2027 > 1965-66)
+  const sortedSeasons = Object.keys(seasonsMap).sort((a, b) => {
+    const yearA = parseInt(a.substring(0, 4));
+    const yearB = parseInt(b.substring(0, 4));
+    return yearB - yearA;
+  });
+
+  const columns = ['President', 'Chairman', 'Hon Secretary', 'Treasurer', 'Fixtures Secretary'];
 
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
@@ -65,10 +86,68 @@ export default async function OfficersPage() {
           color: var(--accent-red);
           text-decoration: underline;
         }
-        .officer-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 2rem;
+        
+        /* Table Styles */
+        .officer-table-container {
+          overflow-x: auto;
+          background: rgba(255,255,255,0.03);
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.1);
+          backdrop-filter: blur(10px);
+          margin-top: 2rem;
+        }
+        .officer-table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
+          color: var(--foreground);
+        }
+        .officer-table th, .officer-table td {
+          padding: 1.25rem 1.5rem;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .officer-table th {
+          font-weight: 700;
+          color: var(--accent-red);
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 1px;
+          white-space: nowrap;
+          background: rgba(0,0,0,0.2);
+        }
+        .officer-table tr:hover {
+          background: rgba(255,255,255,0.02);
+        }
+        .officer-table td {
+          vertical-align: middle;
+        }
+        .officer-cell {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          min-width: 160px;
+        }
+        .officer-avatar {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          object-fit: cover;
+          flex-shrink: 0;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .officer-name {
+          font-weight: 500;
+          font-size: 0.95rem;
+        }
+        .season-col {
+          font-weight: 700;
+          white-space: nowrap;
+          color: var(--foreground);
+        }
+        .empty-cell {
+          color: rgba(255,255,255,0.2);
+          font-size: 0.9rem;
         }
       `}</style>
       <section className="container">
@@ -117,42 +196,49 @@ export default async function OfficersPage() {
           </div>
         </div>
 
-        {/* Officers Grid */}
-        <div className="officer-grid">
-          {officers.length > 0 ? (
-            officers.map((officer, i) => (
-              <div key={i} className="glass-panel" style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <div style={{ width: '100%', aspectRatio: '1/1', borderRadius: '8px', overflow: 'hidden', marginBottom: '1.5rem', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {officer.image ? (
-                    <img 
-                      src={urlFor(officer.image).width(400).height(400).url()} 
-                      alt={officer.name} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-                    />
-                  ) : (
-                    <span style={{ color: 'var(--foreground-muted)', fontSize: '0.8rem' }}>NO PHOTO</span>
-                  )}
-                </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.25rem', color: 'var(--foreground)', textTransform: 'uppercase' }}>
-                  {officer.name}
-                </h3>
-                <p style={{ color: 'var(--accent-red)', fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.5px' }}>
-                  {officer.role}
-                </p>
-              </div>
-            ))
-          ) : (
-            // Empty State Placeholders
-            [1, 2, 3, 4].map(i => (
-              <div key={i} className="glass-panel" style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <div style={{ width: '100%', aspectRatio: '1/1', borderRadius: '8px', marginBottom: '1.5rem', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.2)' }}>
-                   <span style={{ color: 'var(--foreground-muted)', fontSize: '0.8rem' }}>PHOTO {i}</span>
-                </div>
-                <div style={{ width: '60%', height: '20px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', marginBottom: '0.5rem' }}></div>
-                <div style={{ width: '40%', height: '14px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}></div>
-              </div>
-            ))
-          )}
+        {/* Officers Table */}
+        <div className="officer-table-container">
+          <table className="officer-table">
+            <thead>
+              <tr>
+                <th>Season</th>
+                {columns.map(col => (
+                  <th key={col}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedSeasons.map(season => {
+                const roles = seasonsMap[season];
+                return (
+                  <tr key={season}>
+                    <td className="season-col">{season}</td>
+                    {columns.map(col => {
+                      const officer = roles[col];
+                      return (
+                        <td key={col}>
+                          {officer ? (
+                            <div className="officer-cell">
+                              {officer.image ? (
+                                <img 
+                                  src={urlFor(officer.image).width(64).height(64).url()} 
+                                  alt={officer.name} 
+                                  className="officer-avatar" 
+                                />
+                              ) : null}
+                              <span className="officer-name">{officer.name}</span>
+                            </div>
+                          ) : (
+                            <span className="empty-cell">-</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
     </main>
