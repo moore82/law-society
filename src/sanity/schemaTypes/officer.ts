@@ -15,6 +15,16 @@ export const officerType = defineType({
       name: 'role',
       title: 'Role',
       type: 'string',
+      options: {
+        list: [
+          {title: 'President', value: 'President'},
+          {title: 'Chairman', value: 'Chairman'},
+          {title: 'Hon Secretary', value: 'Hon Secretary'},
+          {title: 'Treasurer', value: 'Treasurer'},
+          {title: 'Fixtures Secretary', value: 'Fixtures Secretary'},
+        ],
+        layout: 'dropdown',
+      },
       validation: (rule) => rule.required(),
     }),
     defineField({
