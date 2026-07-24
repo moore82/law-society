@@ -7,9 +7,9 @@ export const goldenPedroType = defineType({
   fields: [
     defineField({
       name: 'year',
-      title: 'Year',
+      title: 'Badge Number',
       type: 'string',
-      description: 'e.g. 2026',
+      description: 'e.g. 12',
       validation: (rule) => rule.required(),
     }),
     defineField({
