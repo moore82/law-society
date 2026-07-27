@@ -29,7 +29,7 @@ export const toursPageType = defineType({
     }),
     defineField({
       name: 'images',
-      title: 'Tours Images',
+      title: 'Tours Media',
       type: 'array',
       of: [
         {
@@ -43,9 +43,29 @@ export const toursPageType = defineType({
               description: 'Important for SEO and accessibility.',
             }
           ]
+        },
+        {
+          type: 'object',
+          name: 'youtubeVideo',
+          title: 'YouTube Video',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'YouTube URL',
+              description: 'e.g. https://www.youtube.com/watch?v=...',
+              validation: (rule) => rule.required()
+            },
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Video Title/Alt text',
+              description: 'Important for SEO and accessibility.'
+            }
+          ]
         }
       ],
-      description: 'Images specifically for the Tours page.',
+      description: 'Images or YouTube videos specifically for the Tours page.',
     }),
   ],
   preview: {

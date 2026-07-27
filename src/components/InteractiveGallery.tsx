@@ -7,6 +7,12 @@ interface InteractiveGalleryProps {
   images: any[]; // Array from Sanity or empty array
 }
 
+const getYoutubeId = (url: string) => {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+  return match ? match[1] : null;
+};
+
 export default function InteractiveGallery({ images }: InteractiveGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -67,11 +73,29 @@ export default function InteractiveGallery({ images }: InteractiveGalleryProps) 
                 overflow: 'hidden'
               }}
             >
-              <img 
-                src={urlFor(image).width(600).height(450).url()} 
-                alt={image.alt || `Gallery Image ${i + 1}`} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-              />
+              {image._type === 'youtubeVideo' && getYoutubeId(image.url) ? (
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                  <img 
+                    src={`https://img.youtube.com/vi/${getYoutubeId(image.url)}/hqdefault.jpg`}
+                    alt={image.alt || `Video ${i + 1}`} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                  />
+                  <div style={{
+                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                    width: '48px', height: '48px', backgroundColor: 'rgba(0,0,0,0.6)',
+                    borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.3)'
+                  }}>
+                    <div style={{ width: 0, height: 0, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderLeft: '12px solid white', marginLeft: '4px' }} />
+                  </div>
+                </div>
+              ) : (
+                <img 
+                  src={urlFor(image).width(600).height(450).url()} 
+                  alt={image.alt || `Gallery Image ${i + 1}`} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                />
+              )}
             </div>
           ))
         ) : (
@@ -147,19 +171,37 @@ export default function InteractiveGallery({ images }: InteractiveGalleryProps) 
             &#10094;
           </button>
 
-          {/* The Image */}
-          <img 
-            src={urlFor(images[selectedIndex]).width(1600).url()} 
-            alt={images[selectedIndex].alt || `Gallery Image ${selectedIndex + 1}`} 
-            style={{
-              maxHeight: '85vh',
-              maxWidth: 'calc(100vw - 20rem)',
-              objectFit: 'contain',
-              borderRadius: '8px',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-            }}
-            onClick={(e) => e.stopPropagation()} 
-          />
+          {/* The Media */}
+          {images[selectedIndex]._type === 'youtubeVideo' && getYoutubeId(images[selectedIndex].url) ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${getYoutubeId(images[selectedIndex].url)}?autoplay=1`}
+              style={{
+                width: '85vw',
+                height: '85vh',
+                maxWidth: '1200px',
+                maxHeight: '675px',
+                border: 'none',
+                borderRadius: '8px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+              }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              onClick={(e) => e.stopPropagation()} 
+            />
+          ) : (
+            <img 
+              src={urlFor(images[selectedIndex]).width(1600).url()} 
+              alt={images[selectedIndex].alt || `Gallery Image ${selectedIndex + 1}`} 
+              style={{
+                maxHeight: '85vh',
+                maxWidth: 'calc(100vw - 20rem)',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+              }}
+              onClick={(e) => e.stopPropagation()} 
+            />
+          )}
 
           {/* Next Button */}
           <button 

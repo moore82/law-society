@@ -21,7 +21,7 @@ export const galleryPageType = defineType({
     }),
     defineField({
       name: 'images',
-      title: 'Gallery Images',
+      title: 'Gallery Media',
       type: 'array',
       of: [
         {
@@ -35,9 +35,29 @@ export const galleryPageType = defineType({
               description: 'Important for SEO and accessibility.',
             }
           ]
+        },
+        {
+          type: 'object',
+          name: 'youtubeVideo',
+          title: 'YouTube Video',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'YouTube URL',
+              description: 'e.g. https://www.youtube.com/watch?v=...',
+              validation: (rule) => rule.required()
+            },
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Video Title/Alt text',
+              description: 'Important for SEO and accessibility.'
+            }
+          ]
         }
       ],
-      description: 'Upload multiple photos to display in the main gallery.',
+      description: 'Upload multiple photos or add YouTube videos to display in the main gallery.',
     }),
   ],
   preview: {
