@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     });
 
     const mailOptions = {
-      from: `"${name}" <${process.env.SMTP_USER || email}>`,
+      from: `"${name}" <${process.env.SMTP_FROM || process.env.SMTP_USER || email}>`,
       replyTo: email,
       to: recipientEmail,
       subject: `Contact Form: ${subject}`,
