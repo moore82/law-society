@@ -103,15 +103,16 @@ export default async function OfficersPage() {
           color: var(--foreground);
         }
         .officer-table th, .officer-table td {
-          padding: 1.25rem 1.5rem;
+          padding: 0.75rem 0.5rem;
           border-bottom: 1px solid rgba(255,255,255,0.05);
+          font-size: 0.85rem;
         }
         .officer-table th {
           font-weight: 700;
           color: var(--accent-red);
           text-transform: uppercase;
-          font-size: 0.85rem;
-          letter-spacing: 1px;
+          font-size: 0.75rem;
+          letter-spacing: 0.5px;
           white-space: nowrap;
           background: rgba(0,0,0,0.2);
         }
@@ -124,12 +125,12 @@ export default async function OfficersPage() {
         .officer-cell {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
-          min-width: 160px;
+          gap: 0.5rem;
+          min-width: 120px;
         }
         .officer-avatar {
-          width: 36px;
-          height: 36px;
+          width: 28px;
+          height: 28px;
           border-radius: 50%;
           object-fit: cover;
           flex-shrink: 0;
@@ -138,12 +139,13 @@ export default async function OfficersPage() {
         }
         .officer-name {
           font-weight: 500;
-          font-size: 0.95rem;
+          font-size: 0.85rem;
         }
         .season-col {
           font-weight: 700;
           white-space: nowrap;
           color: var(--foreground);
+          font-size: 0.85rem;
         }
         .empty-cell {
           color: rgba(255,255,255,0.2);
