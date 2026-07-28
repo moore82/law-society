@@ -25,27 +25,29 @@ export default async function FosRoundupPage() {
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <style>{`
         .content-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
+          display: block;
           padding: 1.5rem !important;
           margin-bottom: 4rem;
         }
         @media (min-width: 769px) {
           .content-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
             padding: 3rem !important;
           }
         }
-        .content-img-wrapper {
-          width: 100% !important;
-          overflow: hidden;
+        .roundup-inline-img {
+          width: 100%;
+          height: auto;
+          border-radius: 12px;
+          margin-bottom: 1.5rem;
+          display: block;
         }
-        @media (max-width: 768px) {
-          .content-img-wrapper {
-            max-width: 100% !important;
-            margin: 0 auto !important;
+        @media (min-width: 769px) {
+          .roundup-inline-img {
+            float: right;
+            width: 45%;
+            max-width: 600px;
+            margin-left: 2.5rem;
+            margin-bottom: 1.5rem;
           }
         }
         .portable-text p {
@@ -75,6 +77,13 @@ export default async function FosRoundupPage() {
         {/* Content Area */}
         <div className="glass-panel content-grid">
           <div className="content-body-text portable-text" style={{ color: 'var(--foreground)' }}>
+            {mainImage && (
+              <img 
+                src={urlFor(mainImage).width(800).url()} 
+                alt={mainImage.alt || 'Roundup Image'} 
+                className="roundup-inline-img"
+              />
+            )}
             {data?.content ? (
               <PortableText value={data.content} />
             ) : (
@@ -90,18 +99,8 @@ export default async function FosRoundupPage() {
                 </p>
               </>
             )}
-          </div>
-          
-          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
-            {mainImage ? (
-              <img 
-                src={urlFor(mainImage).width(800).url()} 
-                alt={mainImage.alt || 'Roundup Image'} 
-                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '12px' }} 
-              />
-            ) : (
-              <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
-            )}
+            {/* Clearfix for floated image */}
+            <div style={{ clear: 'both' }}></div>
           </div>
         </div>
 
