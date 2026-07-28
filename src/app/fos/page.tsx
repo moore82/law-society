@@ -47,12 +47,12 @@ export default async function FOSLandingPage() {
     client.fetch<FosWinner[]>(`*[_type == "fosWinner"] | order(year desc)`)
   ]);
 
-  const bgImage = pageData?.heroBackgroundImage 
-    ? urlFor(pageData.heroBackgroundImage).url() 
+  const bgImage = pageData?.heroBackgroundImage
+    ? urlFor(pageData.heroBackgroundImage).url()
     : null;
-    
+
   const galleryImages = galleryData?.images ? galleryData.images.slice(0, 4) : [];
-  
+
   const displayWinnersCount = pageData?.winnersCount || 4;
   const recentWinners = allWinners.slice(0, displayWinnersCount);
 
@@ -200,7 +200,7 @@ export default async function FOSLandingPage() {
             <div className="partners-grid">
               {partners.map((partner) => (
                 <Link key={partner._id} href={`/fos/partners/${partner.slug.current}`} style={{ textDecoration: 'none' }}>
-                  <div style={{ aspectRatio: '3/2', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.02)', padding: '1rem', overflow: 'hidden', transition: 'all 0.2s ease' }} className="partner-card-hover">
+                  <div style={{ aspectRatio: '3/2', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '1rem', overflow: 'hidden', transition: 'all 0.2s ease' }} className="partner-card-hover">
                     <style>{`.partner-card-hover:hover { border-color: rgba(255,255,255,0.3) !important; background: rgba(255,255,255,0.05) !important; }`}</style>
                     {partner.image ? (
                       <img src={urlFor(partner.image).url()} alt={partner.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
@@ -284,7 +284,7 @@ export default async function FOSLandingPage() {
             <div className="gallery-preview-grid">
               {galleryImages.map((img, i) => (
                 <div key={i} className="glass-panel" style={{ aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, overflow: 'hidden' }}>
-                  <img src={urlFor(img).width(400).url()} alt={`Gallery Photo ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={urlFor(img).width(400).url()} alt={`Gallery Photo ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               ))}
             </div>
