@@ -18,7 +18,7 @@ type Partner = {
 export default async function PartnerDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   // Await the params object (required in Next.js 15+)
   const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+  const slug = decodeURIComponent(resolvedParams.slug);
 
   const partner = await client.fetch<Partner | null>(
     `*[_type == "partner" && slug.current == $slug][0]`,
