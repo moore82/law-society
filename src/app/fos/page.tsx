@@ -152,7 +152,7 @@ export default async function FOSLandingPage() {
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 900, textTransform: 'uppercase', marginBottom: '1rem', color: '#ffffff', lineHeight: 1 }}>
             {pageData?.heroTitle || 'Festival of Sport'}
           </h1>
-          <p style={{ fontSize: '1.2rem', color: 'var(--foreground-muted)', marginBottom: '2.5rem' }}>
+          <p style={{ fontSize: '1.2rem', color: '#ffffff', fontWeight: 500, letterSpacing: '0.5px', textShadow: '0 2px 4px rgba(0,0,0,0.5)', marginBottom: '2.5rem' }}>
             {pageData?.heroSubtitle || 'Festival name · dates · venue'}
           </p>
           <Link href="/fos/get-involved">
@@ -233,7 +233,7 @@ export default async function FOSLandingPage() {
                 <tbody>
                   {recentWinners.map((row, i) => (
                     <tr key={row._id} style={{ borderBottom: i < recentWinners.length - 1 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none' }}>
-                      <td style={{ fontWeight: 700, color: 'var(--accent-red)', width: '80px', padding: '1.25rem 1rem' }}>{row.year}</td>
+                      <td style={{ fontWeight: 700, color: 'var(--accent-red)', whiteSpace: 'nowrap', padding: '1.25rem 1rem' }}>{row.year}</td>
                       <td style={{ color: 'var(--foreground)', padding: '1.25rem 1rem', fontWeight: 500 }}>{row.cupWinner}</td>
                       <td style={{ color: 'var(--foreground-muted)', padding: '1.25rem 1rem' }}>{row.shieldWinner || '-'}</td>
                     </tr>
