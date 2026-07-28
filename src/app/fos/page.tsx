@@ -60,7 +60,7 @@ export default async function FOSLandingPage() {
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <style>{`
         .fos-hero {
-          background: ${bgImage ? `linear-gradient(135deg, rgba(29, 16, 16, 0.9), rgba(10, 3, 3, 0.95)), url('${bgImage}')` : `linear-gradient(135deg, rgba(29, 16, 16, 0.9), rgba(10, 3, 3, 0.95))`};
+          background: ${bgImage ? `linear-gradient(135deg, rgba(29, 16, 16, 0.5), rgba(10, 3, 3, 0.5)), url('${bgImage}')` : `linear-gradient(135deg, rgba(29, 16, 16, 0.5), rgba(10, 3, 3, 0.5))`};
           background-size: cover;
           background-position: center;
           border: 1px solid rgba(255, 51, 68, 0.2);
@@ -149,9 +149,6 @@ export default async function FOSLandingPage() {
       <section className="container">
         {/* HERO */}
         <div className="fos-hero">
-          <div style={{ color: 'var(--accent-red)', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1rem' }}>
-            FOS HERO — event banner
-          </div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 900, textTransform: 'uppercase', marginBottom: '1rem', color: '#ffffff', lineHeight: 1 }}>
             {pageData?.heroTitle || 'Festival of Sport'}
           </h1>

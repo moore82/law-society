@@ -92,12 +92,12 @@ export default async function FosRoundupPage() {
             )}
           </div>
           
-          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
+          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
             {mainImage ? (
               <img 
                 src={urlFor(mainImage).width(800).url()} 
                 alt={mainImage.alt || 'Roundup Image'} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '12px' }} 
+                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '12px' }} 
               />
             ) : (
               <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
