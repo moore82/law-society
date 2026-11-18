@@ -2,14 +2,16 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import Navigation from "./Navigation";
+import Navigation, { SeasonNavItem } from "./Navigation";
 import Footer from "./Footer";
 import CookieBanner from "./CookieBanner";
 
 export default function SiteLayout({
   children,
+  seasons = []
 }: {
   children: React.ReactNode;
+  seasons?: SeasonNavItem[];
 }) {
   const pathname = usePathname();
   
@@ -22,7 +24,7 @@ export default function SiteLayout({
 
   return (
     <>
-      <Navigation />
+      <Navigation seasons={seasons} />
       {children}
       <Footer />
       <CookieBanner />

@@ -3,54 +3,75 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const navItems = [
-  {
-    label: 'About the Club',
-    href: '/about',
-    children: [
-      { label: 'Articles', href: '/articles' },
-      { label: 'History', href: '/about/history' },
-      { label: 'Officers of the Club', href: '/about/officers' }
-    ]
-  },
-  {
-    label: 'Honours Board',
-    href: '/honours',
-    children: [
-      { label: 'Tim Edwards Memorial Trophy', href: '/honours/tim-edwards-trophy' },
-      { label: 'Order of the Golden Pedro', href: '/honours/order-of-the-golden-pedro' },
-      { label: 'Captains', href: '/honours/captains' },
-      { label: 'Surrey Vice Presidents', href: '/honours/surrey-vice-presidents' }
-    ]
-  },
-  {
-    label: 'Fixtures & Results',
-    href: '/fixtures',
-    children: [
-      { label: '2026 / 2027', href: '/fixtures/2026-2027' }
-    ]
-  },
-  {
-    label: 'Festival of Sport',
-    href: '/fos',
-    children: [
-      { label: 'Partners', href: '/fos/partners' },
-      { label: 'Winners', href: '/fos/previous-winners' },
-      { label: 'Roundup', href: '/fos/roundup' },
-      { label: 'Get Involved', href: '/fos/get-involved' },
-      { label: 'Gallery', href: '/fos/gallery' }
-    ]
-  },
-  { label: 'Tours', href: '/tours' },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'Contact', href: '/contact' }
-];
+export type SeasonNavItem = {
+  name: string;
+  slug: { current: string };
+};
 
-export default function Navigation() {
+interface NavigationProps {
+  seasons?: SeasonNavItem[];
+}
+
+export default function Navigation({ seasons: initialSeasons = [] }: NavigationProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [seasons, setSeasons] = useState<SeasonNavItem[]>(initialSeasons);
+
+  useEffect(() => {
+    if (initialSeasons && initialSeasons.length > 0) {
+      setSeasons(initialSeasons);
+    }
+  }, [initialSeasons]);
+
+  const seasonChildren = seasons.length > 0
+    ? seasons.map((s) => ({
+        label: s.name,
+        href: `/fixtures/${s.slug?.current || s.name}`
+      }))
+    : [{ label: 'All Fixtures', href: '/fixtures' }];
+
+  const navItems = [
+    {
+      label: 'About the Club',
+      href: '/about',
+      children: [
+        { label: 'Articles', href: '/articles' },
+        { label: 'History', href: '/about/history' },
+        { label: 'Officers of the Club', href: '/about/officers' }
+      ]
+    },
+    {
+      label: 'Honours Board',
+      href: '/honours',
+      children: [
+        { label: 'Tim Edwards Memorial Trophy', href: '/honours/tim-edwards-trophy' },
+        { label: 'Order of the Golden Pedro', href: '/honours/order-of-the-golden-pedro' },
+        { label: 'Captains', href: '/honours/captains' },
+        { label: 'Surrey Vice Presidents', href: '/honours/surrey-vice-presidents' }
+      ]
+    },
+    {
+      label: 'Fixtures & Results',
+      href: '/fixtures',
+      children: seasonChildren
+    },
+    {
+      label: 'Festival of Sport',
+      href: '/fos',
+      children: [
+        { label: 'Partners', href: '/fos/partners' },
+        { label: 'Winners', href: '/fos/previous-winners' },
+        { label: 'Roundup', href: '/fos/roundup' },
+        { label: 'Get Involved', href: '/fos/get-involved' },
+        { label: 'Gallery', href: '/fos/gallery' }
+      ]
+    },
+    { label: 'Tours', href: '/tours' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'Contact', href: '/contact' }
+  ];
 
   useEffect(() => {
     if (pathname.startsWith('/fos')) {
