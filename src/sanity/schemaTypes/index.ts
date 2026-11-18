@@ -24,6 +24,8 @@ import { homePageType } from './homePage'
 import { articleType } from './article'
 import { surreyVicePresidentType } from './surreyVicePresident'
 import { surreyVicePresidentsPageType } from './surreyVicePresidentsPage'
+import { timEdwardsTrophyPageType } from './timEdwardsTrophyPage'
+import { goldenPedroPageType } from './goldenPedroPage'
 import { tourType } from './tour'
 
 import openingHoursPageType from './openingHoursPage'
@@ -41,7 +43,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     seasonType, toursPageType, galleryPageType, contactPageType, 
     fosPageType, fosGalleryPageType, partnerType, fosWinnerType, 
     getInvolvedPageType, fosRoundupPageType,
-    surreyVicePresidentType, surreyVicePresidentsPageType, tourType,
+    surreyVicePresidentType, surreyVicePresidentsPageType, 
+    timEdwardsTrophyPageType, goldenPedroPageType, tourType,
     openingHoursPageType, socialLinksPageType, sitemapPageType,
     privacyPolicyPageType, cookiePolicyPageType, termsOfServicePageType
   ],

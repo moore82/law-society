@@ -17,8 +17,8 @@ const navItems = [
     label: 'Honours Board',
     href: '/honours',
     children: [
-      { label: 'Tim Edwards Trophy', href: '/honours/tim-edwards-trophy' },
-      { label: 'Golden Pedro', href: '/honours/order-of-the-golden-pedro' },
+      { label: 'Tim Edwards Memorial Trophy', href: '/honours/tim-edwards-trophy' },
+      { label: 'Order of the Golden Pedro', href: '/honours/order-of-the-golden-pedro' },
       { label: 'Captains', href: '/honours/captains' },
       { label: 'Surrey Vice Presidents', href: '/honours/surrey-vice-presidents' }
     ]

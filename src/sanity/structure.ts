@@ -85,16 +85,36 @@ export const structure: StructureResolver = (S) =>
                     .documentId('honoursPage')
                     .title('Honours Page')
                 ),
-              // Tim Edwards Trophy list
+              // Tim Edwards Memorial Trophy Page
               S.listItem()
-                .title('Tim Edwards Trophy Page')
+                .title('Tim Edwards Memorial Trophy Page')
+                .id('timEdwardsTrophyPage')
+                .child(
+                  S.document()
+                    .schemaType('timEdwardsTrophyPage')
+                    .documentId('timEdwardsTrophyPage')
+                    .title('Tim Edwards Memorial Trophy Page')
+                ),
+              // Tim Edwards Memorial Trophy list
+              S.listItem()
+                .title('Tim Edwards Memorial Trophy List')
                 .schemaType('timEdwardsTrophy')
-                .child(S.documentTypeList('timEdwardsTrophy').title('Tim Edwards Trophy Page')),
-              // Golden Pedro list
+                .child(S.documentTypeList('timEdwardsTrophy').title('Tim Edwards Memorial Trophy List')),
+              // Order of the Golden Pedro Page
               S.listItem()
                 .title('Order of the Golden Pedro Page')
+                .id('goldenPedroPage')
+                .child(
+                  S.document()
+                    .schemaType('goldenPedroPage')
+                    .documentId('goldenPedroPage')
+                    .title('Order of the Golden Pedro Page')
+                ),
+              // Order of the Golden Pedro list
+              S.listItem()
+                .title('Order of the Golden Pedro List')
                 .schemaType('goldenPedro')
-                .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro Page')),
+                .child(S.documentTypeList('goldenPedro').title('Order of the Golden Pedro List')),
               // Captains list
               S.listItem()
                 .title('Captains Page')
@@ -324,6 +344,6 @@ export const structure: StructureResolver = (S) =>
 
       // All other document types, filtering out the ones we manually grouped above
       ...S.documentTypeListItems().filter(
-        (listItem) => !['homePage', 'article', 'aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'goldenPedro', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'partner', 'fosWinner', 'galleryImage', 'getInvolvedPage', 'fosRoundupPage', 'openingHoursPage', 'socialLinksPage', 'sitemapPage', 'privacyPolicyPage', 'cookiePolicyPage', 'termsOfServicePage', 'surreyVicePresident', 'surreyVicePresidentsPage', 'tour'].includes(listItem.getId() as string)
+        (listItem) => !['homePage', 'article', 'aboutPage', 'historyPage', 'officersPage', 'officer', 'honoursPage', 'captain', 'timEdwardsTrophy', 'timEdwardsTrophyPage', 'goldenPedro', 'goldenPedroPage', 'fixturesPage', 'season', 'fixture', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'partner', 'fosWinner', 'galleryImage', 'getInvolvedPage', 'fosRoundupPage', 'openingHoursPage', 'socialLinksPage', 'sitemapPage', 'privacyPolicyPage', 'cookiePolicyPage', 'termsOfServicePage', 'surreyVicePresident', 'surreyVicePresidentsPage', 'tour'].includes(listItem.getId() as string)
       ),
     ])

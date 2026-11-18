@@ -29,13 +29,13 @@ export default defineConfig({
     // Hide singletons from the global "Create new document" menu
     newDocumentOptions: (prev, { creationContext }) => {
       if (creationContext.type === 'global') {
-        return prev.filter((templateItem) => !['homePage', 'aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage'].includes(templateItem.templateId))
+        return prev.filter((templateItem) => !['homePage', 'aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage', 'surreyVicePresidentsPage', 'timEdwardsTrophyPage', 'goldenPedroPage'].includes(templateItem.templateId))
       }
       return prev
     },
     // Removes the "duplicate" action on Singleton documents
     actions: (prev, { schemaType }) => {
-      if (['homePage', 'aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage'].includes(schemaType)) {
+      if (['homePage', 'aboutPage', 'historyPage', 'officersPage', 'honoursPage', 'fixturesPage', 'toursPage', 'galleryPage', 'contactPage', 'fosPage', 'fosGalleryPage', 'getInvolvedPage', 'fosRoundupPage', 'surreyVicePresidentsPage', 'timEdwardsTrophyPage', 'goldenPedroPage'].includes(schemaType)) {
         return prev.filter(({ action }) => !['unpublish', 'delete', 'duplicate'].includes(action as string))
       }
       return prev

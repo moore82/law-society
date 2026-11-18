@@ -97,13 +97,13 @@ export default function TableLayout({
                     <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent-red)' }}>{row.col1}</td>
                     <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col2}</td>
                     {headers.length > 2 && (
-                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', color: 'var(--foreground-muted)' }}>{row.col3 || "-"}</td>
+                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col3 || "-"}</td>
                     )}
                     {headers.length > 3 && (
-                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', color: 'var(--foreground-muted)' }}>{row.col4 || "-"}</td>
+                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col4 || "-"}</td>
                     )}
                     {headers.length > 4 && (
-                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', color: 'var(--foreground-muted)' }}>{row.col5 || "-"}</td>
+                      <td style={{ padding: '1.25rem 2rem', fontSize: '0.95rem', fontWeight: 500 }}>{row.col5 || "-"}</td>
                     )}
                   </tr>
                 );
