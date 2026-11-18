@@ -19,7 +19,7 @@ export const officerType = defineType({
         list: [
           {title: 'President', value: 'President'},
           {title: 'Chairman', value: 'Chairman'},
-          {title: 'Hon Secretary', value: 'Hon Secretary'},
+          {title: 'Honorary Secretary', value: 'Honorary Secretary'},
           {title: 'Treasurer', value: 'Treasurer'},
           {title: 'Fixtures Secretary', value: 'Fixtures Secretary'},
         ],
@@ -31,7 +31,7 @@ export const officerType = defineType({
       name: 'season',
       title: 'Season',
       type: 'string',
-      description: 'The season this officer served (e.g., 1965-66)',
+      description: 'The season this officer served (e.g., 2026/2027)',
     }),
     defineField({
       name: 'image',

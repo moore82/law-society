@@ -1,4 +1,3 @@
-import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
@@ -7,8 +6,6 @@ export const revalidate = 60;
 type OfficersPageData = {
   title: string;
   intro: string;
-  content: any;
-  images: any[];
 };
 
 type OfficerData = {
@@ -18,75 +15,58 @@ type OfficerData = {
   image: any;
 };
 
+function formatSeason(season: string): string {
+  if (!season) return season;
+  if (season.includes('2017') && season.includes('2078')) return '2017/2018';
+  const clean = season.trim();
+  const match = clean.match(/^(\d{4})\s*[-/]\s*(\d{2,4})$/);
+  if (match) {
+    const y1 = parseInt(match[1], 10);
+    let y2 = parseInt(match[2], 10);
+    if (match[2].length === 2) {
+      const century = y1 < 2000 ? 1900 : 2000;
+      y2 = century + y2;
+      if (y2 < y1) y2 += 100;
+    }
+    return `${y1}/${y2}`;
+  }
+  return clean;
+}
+
 export default async function OfficersPage() {
   const pageData = await client.fetch<OfficersPageData>(
-    `*[_type == "officersPage"][0]`
+    `*[_type == "officersPage"][0] { title, intro }`
   );
   
   const officers = await client.fetch<OfficerData[]>(
     `*[_type == "officer"]`
   );
 
-  const mainImage = pageData?.images && pageData.images.length > 0 ? pageData.images[0] : null;
-
   // Group by season
   const seasonsMap: Record<string, Record<string, OfficerData>> = {};
   
   officers.forEach(officer => {
     if (!officer.season) return;
-    if (!seasonsMap[officer.season]) {
-      seasonsMap[officer.season] = {};
+    const seasonKey = formatSeason(officer.season);
+    if (!seasonsMap[seasonKey]) {
+      seasonsMap[seasonKey] = {};
     }
-    seasonsMap[officer.season][officer.role] = officer;
+    const roleKey = officer.role === 'Hon Secretary' ? 'Honorary Secretary' : officer.role;
+    seasonsMap[seasonKey][roleKey] = officer;
   });
 
-  // Sort seasons descending (e.g. 2026/2027 > 1965-66)
+  // Sort seasons descending (e.g. 2026/2027 > 1965/1966)
   const sortedSeasons = Object.keys(seasonsMap).sort((a, b) => {
-    const yearA = parseInt(a.substring(0, 4));
-    const yearB = parseInt(b.substring(0, 4));
+    const yearA = parseInt(a.substring(0, 4), 10);
+    const yearB = parseInt(b.substring(0, 4), 10);
     return yearB - yearA;
   });
 
-  const columns = ['President', 'Chairman', 'Hon Secretary', 'Treasurer', 'Fixtures Secretary'];
+  const columns = ['President', 'Chairman', 'Honorary Secretary', 'Treasurer', 'Fixtures Secretary'];
 
   return (
     <main style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '6rem' }}>
       <style>{`
-        .content-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
-          padding: 1.5rem !important;
-          margin-bottom: 4rem;
-        }
-        @media (min-width: 769px) {
-          .content-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            padding: 3rem !important;
-          }
-        }
-        .content-img-wrapper {
-          width: 100% !important;
-          overflow: hidden;
-        }
-        @media (max-width: 768px) {
-          .content-img-wrapper {
-            max-width: 100% !important;
-            margin: 0 auto !important;
-          }
-        }
-        .portable-text p {
-          margin-bottom: 1.5rem;
-        }
-        .portable-text p:last-child {
-          margin-bottom: 0;
-        }
-        .portable-text a {
-          color: var(--accent-red);
-          text-decoration: underline;
-        }
-        
         /* Table Styles */
         .officer-table-container {
           overflow-x: auto;
@@ -159,44 +139,13 @@ export default async function OfficersPage() {
         <h1 className="page-title">{pageData?.title || 'OFFICERS OF THE CLUB'}</h1>
         
         {/* Intro */}
-        <div style={{ borderTop: '4px solid var(--accent-red)', borderBottom: '2px solid rgba(255,255,255,0.1)', padding: '2rem 0', marginBottom: '3rem' }}>
-          <p className="content-intro-text" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: 600, lineHeight: 1.5, color: 'var(--foreground)' }}>
-            {pageData?.intro || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel tristique nisl. Phasellus sagittis ex id magna hendrerit lorem ipsum solor.'}
-          </p>
-        </div>
-
-        {/* Content Area */}
-        <div className="glass-panel content-grid">
-          <div className="content-body-text portable-text" style={{ color: 'var(--foreground)' }}>
-            {pageData?.content ? (
-              <PortableText value={pageData.content} />
-            ) : (
-              <>
-                <p style={{ marginBottom: '1.5rem' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <p>
-                  Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
-                </p>
-              </>
-            )}
+        {pageData?.intro && (
+          <div style={{ borderTop: '4px solid var(--accent-red)', borderBottom: '2px solid rgba(255,255,255,0.1)', padding: '2rem 0', marginBottom: '3rem' }}>
+            <p className="content-intro-text" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', fontWeight: 500, lineHeight: 1.6, color: 'var(--foreground)', whiteSpace: 'pre-line' }}>
+              {pageData.intro}
+            </p>
           </div>
-          
-          <div className="content-img-wrapper" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: mainImage ? 'none' : '1px dashed rgba(255,255,255,0.2)' }}>
-            {mainImage ? (
-              <img 
-                src={urlFor(mainImage).width(800).url()} 
-                alt={mainImage.alt || 'Officers Image'} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '12px' }} 
-              />
-            ) : (
-              <span style={{ color: 'var(--foreground-muted)', fontWeight: 600, letterSpacing: '1px' }}>IMAGE PLACEHOLDER</span>
-            )}
-          </div>
-        </div>
+        )}
 
         {/* Officers Table */}
         <div className="officer-table-container">
